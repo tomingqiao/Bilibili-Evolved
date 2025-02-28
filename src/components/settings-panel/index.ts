@@ -5,19 +5,11 @@ import { CdnTypes } from '@/core/cdn-types'
 import { addComponentListener } from '@/core/settings'
 import { DownloadPackageEmitMode } from '@/core/download-mode'
 import { ComponentEntry, componentsTags } from '../types'
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '../define'
+import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '../define'
 import { provideActions } from './external-actions'
+import { SettingsPanelDockSide } from './dock'
 
 export const WidgetsPlugin = 'widgets'
-
-export enum SettingsPanelDockSide {
-  Left = '左侧',
-  Right = '右侧',
-}
 
 const options = defineOptionsMetadata({
   themeColor: {
@@ -41,7 +33,7 @@ const options = defineOptionsMetadata({
     dropdownEnum: TextColor,
   },
   cdnRoot: {
-    defaultValue: CdnTypes.GitHub,
+    defaultValue: CdnTypes.AltCdn,
     displayName: '更新源',
     dropdownEnum: CdnTypes,
   },
@@ -53,10 +45,12 @@ const options = defineOptionsMetadata({
   filenameFormat: {
     defaultValue: '[title][ - ep]',
     displayName: '文件命名格式',
+    multiline: true,
   },
   batchFilenameFormat: {
     defaultValue: '[n - ][ep]',
     displayName: '批量命名格式',
+    multiline: true,
   },
   downloadPackageEmitMode: {
     defaultValue: DownloadPackageEmitMode.Packed,

@@ -21,11 +21,7 @@
       <VEmpty v-else-if="!loading && !canLoadMore && filteredCards.length === 0"></VEmpty>
       <transition-group v-else name="cards" tag="div" class="cards">
         <div v-for="card of filteredCards" :key="card.id" class="favorite-card">
-          <a
-            class="cover-container"
-            target="_blank"
-            :href="'https://www.bilibili.com/video/' + card.bvid"
-          >
+          <a class="favorites-cover-container" target="_blank" :href="getItemPlayLink(card)">
             <DpiImage
               class="cover"
               :src="card.coverUrl"
@@ -34,12 +30,9 @@
             <div class="floating duration">{{ card.durationText }}</div>
             <div class="floating favorite-time">{{ card.favoriteTime }}</div>
           </a>
-          <a
-            class="title"
-            target="_blank"
-            :href="'https://www.bilibili.com/video/' + card.bvid"
-            :title="card.title"
-          >{{ card.title }}</a>
+          <a class="title" target="_blank" :href="getItemPlayLink(card)" :title="card.title">{{
+            card.title
+          }}</a>
           <a
             v-if="card.upID"
             class="up"
@@ -47,18 +40,10 @@
             :href="'https://space.bilibili.com/' + card.upID"
             :title="card.upName"
           >
-            <DpiImage
-              placeholder-image
-              class="face"
-              :src="card.upFaceUrl"
-              :size="20"
-            ></DpiImage>
+            <DpiImage placeholder-image class="face" :src="card.upFaceUrl" :size="20"></DpiImage>
             <div class="name">{{ card.upName }}</div>
           </a>
-          <div
-            v-else
-            class="description"
-          >
+          <div v-else class="description">
             {{ card.description }}
           </div>
         </div>
@@ -72,15 +57,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  VLoading,
-  VEmpty,
-  VIcon,
-  VButton,
-  TextBox,
-  DpiImage,
-  ScrollTrigger,
-} from '@/ui'
+import { VLoading, VEmpty, VIcon, VButton, TextBox, DpiImage, ScrollTrigger } from '@/ui'
 import { formatDate, formatDuration } from '@/core/utils/formatters'
 import { getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
@@ -97,7 +74,8 @@ https://api.bilibili.com/x/v3/fav/resource/list?media_id=media_id&pn=1&ps=20&key
 */
 
 const navbarOptions = getComponentSettings('customNavbar').options
-interface FavoritesItemInfo extends VideoCard {
+interface FavoritesItemInfo extends Omit<VideoCard, 'type'> {
+  type: number
   favoriteTimestamp: number
   favoriteTime: string
 }
@@ -109,6 +87,7 @@ const favoriteItemFilter = (item: any): boolean => {
   return item.attr !== 9 && item.attr !== 1 // 过滤掉已失效视频
 }
 const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
+  type: item.type,
   id: item.id,
   aid: item.id,
   bvid: item.bvid,
@@ -118,7 +97,10 @@ const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
   title: item.title,
   description: item.intro,
   duration: item.duration,
-  durationText: formatDuration(item.duration),
+  durationText:
+    item.page > 1
+      ? `${formatDuration(item.duration)} / ${item.page}P`
+      : formatDuration(item.duration),
   playCount: item.cnt_info.play,
   danmakuCount: item.cnt_info.danmaku,
   upName: item.upper.name,
@@ -131,8 +113,12 @@ async function searchAllList() {
   }
   try {
     this.loading = true
-    const jsonCurrent = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=0&tid=0&platform=web`)
-    const jsonAll = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=1&tid=0&platform=web`)
+    const jsonCurrent = await getJsonWithCredentials(
+      `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=0&tid=0&platform=web`,
+    )
+    const jsonAll = await getJsonWithCredentials(
+      `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=1&tid=0&platform=web`,
+    )
     if (jsonCurrent.code !== 0 && jsonAll.code !== 0) {
       return
     }
@@ -222,8 +208,7 @@ export default Vue.extend({
       this.hasMoreSearchPage = true
       this.searchPage = 1
       this.filteredCards = (this.cards as FavoritesItemInfo[]).filter(
-        it => it.title.toLowerCase().includes(keyword)
-          || it.upName.toLowerCase().includes(keyword),
+        it => it.title.toLowerCase().includes(keyword) || it.upName.toLowerCase().includes(keyword),
       )
     },
   },
@@ -238,9 +223,7 @@ export default Vue.extend({
         // 超过最后一页后返回空数组
         return []
       }
-      return json.data.medias
-        .filter(favoriteItemFilter)
-        .map(favoriteItemMapper)
+      return json.data.medias.filter(favoriteItemFilter).map(favoriteItemMapper)
     },
     async changeList() {
       if (this.folder.id === 0) {
@@ -267,7 +250,7 @@ export default Vue.extend({
         this.page++
         const cards = await this.getCards()
         this.cards.push(...cards)
-        this.hasMorePage = cards.length === 0 || this.cards.length < this.folder.count
+        this.hasMorePage = cards.length !== 0 || this.cards.length < this.folder.count
       } catch (error) {
         logError(error)
       }
@@ -280,12 +263,23 @@ export default Vue.extend({
         this.loadNextPage()
       }
     },
+    getItemPlayLink(item: FavoritesItemInfo) {
+      switch (item.type) {
+        default:
+        case 2: {
+          return `https://www.bilibili.com/video/${item.bvid}`
+        }
+        case 12: {
+          return `https://www.bilibili.com/audio/au${item.id}`
+        }
+      }
+    },
   },
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "../popup";
+@import 'common';
+@import '../popup';
 
 .custom-navbar .favorites-list {
   width: 380px;
@@ -390,7 +384,7 @@ export default Vue.extend({
         &:hover .cover {
           transform: scale(1.05);
         }
-        .cover-container {
+        .favorites-cover-container {
           grid-area: cover;
           overflow: hidden;
           border-radius: 8px 0 0 8px;
@@ -423,7 +417,7 @@ export default Vue.extend({
         .title {
           grid-area: title;
           font-size: 13px;
-          font-weight: bold;
+          @include semi-bold();
           @include max-line(2);
           -webkit-box-align: start;
           margin: 0;

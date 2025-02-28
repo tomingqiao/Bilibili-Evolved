@@ -2,11 +2,7 @@
   <div class="custom-navbar" :class="styles" role="navigation">
     <div class="left-pad padding"></div>
     <div class="custom-navbar-items" role="list">
-      <NavbarItem
-        v-for="item of items"
-        :key="item.name"
-        :item="item"
-      ></NavbarItem>
+      <NavbarItem v-for="item of items" :key="item.name" :item="item"></NavbarItem>
     </div>
     <div class="right-pad padding"></div>
   </div>
@@ -14,7 +10,6 @@
 
 <script lang="ts">
 import { addComponentListener } from '@/core/settings'
-import { getUID } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
 import { registerAndGetData } from '@/plugins/data'
 import { getBuiltInItems } from './built-in-items'
@@ -32,14 +27,7 @@ const [renderedItems] = registerAndGetData(CustomNavbarRenderedItems, {
   items: [] as CustomNavbarItem[],
 })
 const getItems = () => {
-  const isLogin = Boolean(getUID())
   const items = (initItems as CustomNavbarItemInit[])
-    .filter(it => {
-      if (it.loginRequired && !isLogin) {
-        return false
-      }
-      return true
-    })
     .map(it => new CustomNavbarItem(it))
     .sort(ascendingSort(it => it.order))
   renderedItems.items = items
@@ -63,9 +51,13 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    addComponentListener('customNavbar.height', (value: number) => {
-      document.documentElement.style.setProperty('--navbar-height', `${value}px`)
-    }, true)
+    addComponentListener(
+      'customNavbar.height',
+      (value: number) => {
+        document.documentElement.style.setProperty('--navbar-height', `${value}px`)
+      },
+      true,
+    )
     await checkTransparentFill(this)
   },
   methods: {
@@ -82,6 +74,10 @@ export default Vue.extend({
 
 <style lang="scss">
 @import 'common';
+
+.van-message-box {
+  z-index: 10002 !important;
+}
 
 html {
   --navbar-height: 50px;
@@ -117,7 +113,8 @@ body.fixed-navbar {
       top: calc(var(--navbar-height) + 8px) !important;
     }
   }
-  .bili-feed4 .header-channel {
+  .bili-feed4 .header-channel,
+  .search-fixed-header {
     display: none !important;
   }
 }
@@ -127,10 +124,6 @@ body.fixed-navbar {
   transition: all 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   outline: none !important;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  padding-inline-start: 0;
-  padding-inline-end: 0;
 }
 
 .custom-navbar {
@@ -214,12 +207,7 @@ body.fixed-navbar {
       left: 0;
       width: 100%;
       height: calc(2 * var(--navbar-height));
-      background-image: linear-gradient(
-        to bottom,
-        #000a 0,
-        #0004 65%,
-        transparent 100%
-      );
+      background-image: linear-gradient(to bottom, #000a 0, #0004 65%, transparent 100%);
       pointer-events: none;
     }
   }

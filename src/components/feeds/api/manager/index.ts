@@ -1,4 +1,5 @@
-import { getCookieValue } from '@/core/utils'
+import { getCookieValue, matchUrlPattern } from '@/core/utils'
+import { feedsUrls } from '@/core/utils/urls'
 import { FeedsCardCallback } from '../types'
 import { feedsCardCallbacks } from './base'
 import { FeedsCardsManagerV1 } from './v1'
@@ -13,7 +14,8 @@ export const isV2Feeds = () => {
   return [
     't.bilibili.com',
     'space.bilibili.com',
-  ].some(host => location.host === host)
+    /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/,
+  ].some(pattern => matchUrlPattern(pattern))
 }
 export const feedsCardsManager = (() => {
   const isV2 = isV2Feeds()
@@ -27,6 +29,10 @@ export const feedsCardsManager = (() => {
  * @param callback 回调函数
  */
 export const forEachFeedsCard = async (callback: FeedsCardCallback) => {
+  if (feedsUrls.every(url => !matchUrlPattern(url))) {
+    return null
+  }
+
   const success = await feedsCardsManager.startWatching()
   if (!success) {
     console.error('feedsCardsManager.startWatching() failed')

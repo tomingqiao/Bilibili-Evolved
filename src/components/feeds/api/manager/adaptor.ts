@@ -23,11 +23,9 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
   adaptors.push(
     {
       name: 'live',
-      match: [
-        ...liveUrls,
-      ],
+      match: [...liveUrls],
       watchCardsList: async manager => {
-        const feedsContainer = await select('.room-feed') as HTMLElement
+        const feedsContainer = (await select('.room-feed')) as HTMLElement
         if (!feedsContainer) {
           return false
         }
@@ -35,9 +33,9 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
         let cardListObserver: MutationObserver | null = null
         childList(feedsContainer, async () => {
           if (dq('.room-feed-content')) {
-            const cardsList = await select('.room-feed-content .content') as HTMLElement
-            cardListObserver?.disconnect();
-            [cardListObserver] = manager.updateCards(cardsList)
+            const cardsList = (await select('.room-feed-content .content')) as HTMLElement
+            cardListObserver?.disconnect()
+            ;[cardListObserver] = manager.updateCards(cardsList)
           } else {
             cardListObserver?.disconnect()
             cardListObserver = null
@@ -49,11 +47,9 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
     },
     {
       name: 'space',
-      match: [
-        'https://space.bilibili.com/',
-      ],
+      match: ['https://space.bilibili.com/'],
       watchCardsList: async manager => {
-        const container = await select('.s-space') as HTMLDivElement
+        const container = (await select('.s-space, .space-main')) as HTMLDivElement
         if (!container) {
           return false
         }
@@ -75,13 +71,12 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
           if (vm.observer) {
             return vm.observer
           }
-          const newListPromise = select('.feed-card .content, .bili-dyn-list__items') as Promise<HTMLElement>
+          const newListPromise = select('.bili-dyn-list__items') as Promise<HTMLElement>
           vm.observer = (async () => {
-            // const newList = await vm.listElement as HTMLElement
             const newList = await newListPromise
-            if (newList !== await vm.listElement) {
+            if (newList !== (await vm.listElement)) {
               if (vm.listElement) {
-                await stop()
+                stop()
               }
               vm.listElement = newListPromise
               start()
@@ -93,7 +88,7 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
           return vm.observer
         }
         childListSubtree(container, async () => {
-          if (dq('.feed-card .content, .bili-dyn-list__items')) {
+          if (dq('.bili-dyn-list__items')) {
             start()
           } else {
             stop()
@@ -104,20 +99,18 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
     },
     {
       name: 'topic',
-      match: [
-        'https://t.bilibili.com/topic',
-      ],
+      match: ['https://t.bilibili.com/topic'],
       watchCardsList: async manager => {
-        const feedsContainer = await select('.page-container') as HTMLElement
+        const feedsContainer = (await select('.page-container')) as HTMLElement
         if (!feedsContainer) {
           return false
         }
         let cardListObserver: MutationObserver | null = null
         childList(feedsContainer, async () => {
           if (dq('.page-container .feed')) {
-            const cardsList = await select('.feed .feed-topic') as HTMLElement
-            cardListObserver?.disconnect();
-            [cardListObserver] = manager.updateCards(cardsList)
+            const cardsList = (await select('.feed .feed-topic')) as HTMLElement
+            cardListObserver?.disconnect()
+            ;[cardListObserver] = manager.updateCards(cardsList)
           } else {
             cardListObserver?.disconnect()
             cardListObserver = null
@@ -128,12 +121,24 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
       },
     },
     {
-      name: 'default',
-      match: [
-        'https://t.bilibili.com/',
-      ],
+      name: 'opus-detail',
+      match: ['https://www.bilibili.com/opus/'],
       watchCardsList: async manager => {
-        const list = await select('.feed-card .content, .detail-content .detail-card, #app > .content > .card, .bili-dyn-list__items') as HTMLElement
+        const opusContainer = (await select('.opus-detail')) as HTMLElement
+        if (!opusContainer) {
+          return false
+        }
+        manager.updateCards(opusContainer)
+        return true
+      },
+    },
+    {
+      name: 'default',
+      match: ['https://t.bilibili.com/'],
+      watchCardsList: async manager => {
+        const list = (await select(
+          '.feed-card .content, .detail-content .detail-card, #app > .content > .card, .bili-dyn-list__items',
+        )) as HTMLElement
         if (!list) {
           return false
         }
@@ -146,8 +151,8 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
               return
             }
             cardListObserver?.disconnect()
-            manager.cards = [];
-            [cardListObserver] = manager.updateCards(changedList)
+            manager.cards = []
+            ;[cardListObserver] = manager.updateCards(changedList)
           })
         } else {
           manager.updateCards(list)

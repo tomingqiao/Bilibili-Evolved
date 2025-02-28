@@ -7,6 +7,7 @@ module.exports = {
     'plugin:vue/recommended',
     'plugin:@typescript-eslint/recommended',
     'airbnb-base',
+    'plugin:prettier/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -18,8 +19,10 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
   },
-  plugins: ['vue', '@typescript-eslint'],
+  plugins: ['vue', '@typescript-eslint', 'prettier'],
   rules: {
+    'prettier/prettier': 'error',
+
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
@@ -43,6 +46,7 @@ module.exports = {
       },
     ],
 
+    'vue/multi-word-component-names': 'off',
     'vue/max-attributes-per-line': 'off',
     'vue/html-self-closing': 'off',
     'vue/no-v-html': 'off',
@@ -72,15 +76,15 @@ module.exports = {
     'no-alert': 'off',
     'no-restricted-globals': 'off',
 
-    'arrow-parens': ['error', 'as-needed'],
+    'arrow-body-style': 'off',
+    'prefer-arrow-callback': 'off',
     'object-curly-newline': 'off',
-    semi: ['error', 'never'],
     'linebreak-style': 'off',
     camelcase: 'off',
     'lines-between-class-members': 'off',
     radix: ['error', 'as-needed'],
-    'max-len': 'error',
     'max-classes-per-file': 'off',
+    'class-methods-use-this': 'off',
     'prefer-destructuring': [
       'error',
       {

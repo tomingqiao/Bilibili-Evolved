@@ -175,7 +175,7 @@
             &-playing,
             &-title-playing {
               @include theme-color();
-              @include background-color('5');
+              @include background-color();
               .cur-play-icon {
                 @include to-theme("blue");
               }
@@ -349,6 +349,9 @@ a {
 }
 .main-container .bottom-brief-introduction {
   @include background-color("2");
+}
+.main-container {
+  @include background-color();
 }
 .fullscreen-loading .tv-bg + .container {
   @include background-color();
@@ -772,7 +775,7 @@ body:not(.simplify-comment) .panel-area .bb-comment {
   }
 }
 .z-top-container {
-  @include background-color("3");
+  @include background-color("2");
 }
 .coin-dialog-wrapper {
   @include background-color("2");

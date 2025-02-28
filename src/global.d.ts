@@ -1,5 +1,6 @@
 import { LoDashStatic } from 'lodash'
 import { CoreApis, ExternalApis } from './core/core-apis'
+import type { CdnConfig } from '../webpack/cdn/types'
 
 declare global {
   /** @deprecated Use window.lodash instead. */
@@ -7,6 +8,31 @@ declare global {
 
   const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
+  type Vue = import('vue/types/umd')
+
+  type EnumEventTarget<EventTypes extends string> = EventTarget & {
+    addEventListener(
+      type: EventTypes,
+      callback: EventListenerOrEventListenerObject | null,
+      options?: AddEventListenerOptions | boolean,
+    ): void
+    removeEventListener(
+      type: EventTypes,
+      callback: EventListenerOrEventListenerObject | null,
+      options?: EventListenerOptions | boolean,
+    ): void
+  }
+  interface NetworkInformation extends EnumEventTarget<'change'> {
+    downlink: number
+    downlinkMax: number
+    effectiveType: string
+    rtt: number
+    saveData: boolean
+    type: string
+  }
+  interface Navigator {
+    connection?: NetworkInformation
+  }
 
   interface GitInfo {
     commitHash: string
@@ -17,29 +43,15 @@ declare global {
   interface CompilationInfo extends GitInfo {
     year: string
     version: string
-    altCdn: {
-      owner: string
-      host: string
-      stableClient: string
-      previewClient: string
-      library: {
-        lodash: string
-        protobuf: string
-        jszip: string
-        sortable: string
-        mdi: string
-      }
-      smallLogo: string
-      logo: string
-      root: (branch: string, owner?: string) => string
-    }
+    altCdn: CdnConfig
+    allCdns: Record<string, CdnConfig>
     // buildTime: number
   }
   const webpackCompilationInfo: CompilationInfo
   const webpackGitInfo: GitInfo
 
   const BwpElement: {
-    new(): HTMLVideoElement
+    new (): HTMLVideoElement
     prototype: HTMLVideoElement
   }
   interface Window {
@@ -69,7 +81,7 @@ declare global {
   interface MonkeyXhrBasicDetails {
     url: string
     method?: 'GET' | 'POST' | 'HEAD'
-    headers?: { [name: string]: string },
+    headers?: { [name: string]: string }
     data?: string
     cookie?: string
     binary?: boolean
@@ -93,7 +105,12 @@ declare global {
     ontimeout?: (response: MonkeyXhrResponse) => void
     onload?: (response: MonkeyXhrResponse) => void
   }
-  type RunAtOptions = 'document-start' | 'document-end' | 'document-idle' | 'document-body' | 'context-menu'
+  type RunAtOptions =
+    | 'document-start'
+    | 'document-end'
+    | 'document-idle'
+    | 'document-body'
+    | 'context-menu'
   interface MonkeyInfo {
     script: {
       author: string
@@ -150,4 +167,10 @@ declare global {
   function GM_deleteValue(name: string): void
   function GM_getResourceText(name: string): string
   function GM_getResourceURL(name: string): string
+  function GM_registerMenuCommand(
+    name: string,
+    callback: (event: MouseEvent | KeyboardEvent) => void,
+    accessKey?: string,
+  ): string
+  function GM_unregisterMenuCommand(menuId: string): void
 }

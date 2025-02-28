@@ -11,11 +11,15 @@
       :placeholder="value.toString()"
       @change="type === 'text' ? valueChange($event) : numberChange($event)"
     ></TextBox>
-    <SwitchBox
-      v-if="type === 'boolean'"
-      :checked="value"
+    <TextArea
+      v-if="type === 'textArea'"
+      change-on-blur
+      :validator="option.validator"
+      :text="value.toString()"
+      :placeholder="value.toString()"
       @change="valueChange($event)"
-    ></SwitchBox>
+    ></TextArea>
+    <SwitchBox v-if="type === 'boolean'" :checked="value" @change="valueChange($event)"></SwitchBox>
     <ColorPicker
       v-if="type === 'color'"
       :compact="true"
@@ -29,11 +33,7 @@
       :range="value"
       @change="valueChange($event)"
     ></RangeInput>
-    <ImagePicker
-      v-if="type === 'image'"
-      :image="value"
-      @change="valueChange($event)"
-    ></ImagePicker>
+    <ImagePicker v-if="type === 'image'" :image="value" @change="valueChange($event)"></ImagePicker>
     <VDropdown
       v-if="type === 'dropdown'"
       :value="value"
@@ -57,15 +57,14 @@
       :value="value"
       @change="debounceValueChange($event)"
     ></VSlider>
-    <div v-if="type === 'unknown'" class="unknown-option-type">
-      未知的选项类型
-    </div>
+    <div v-if="type === 'unknown'" class="unknown-option-type">未知的选项类型</div>
   </div>
 </template>
 
 <script lang="ts">
 import {
   TextBox,
+  TextArea,
   SwitchBox,
   ColorPicker,
   RangeInput,
@@ -74,7 +73,7 @@ import {
   VSlider,
 } from '@/ui'
 import { getComponentSettings, ComponentSettings } from '@/core/settings'
-import { ComponentOption } from '../component'
+import { OptionMetadata } from '../component'
 import { getDropdownItems } from './dropdown'
 import SwitchOptions from '../SwitchOptions.vue'
 
@@ -88,6 +87,7 @@ export default {
   components: {
     SwitchOptions,
     TextBox,
+    TextArea,
     SwitchBox,
     ColorPicker,
     RangeInput,
@@ -122,7 +122,7 @@ export default {
   },
   computed: {
     type() {
-      const option = this.option as ComponentOption
+      const option = this.option as OptionMetadata
       const { defaultValue } = option
       // console.log(option)
       switch (typeof defaultValue) {
@@ -140,6 +140,9 @@ export default {
           }
           if (option.dropdownEnum) {
             return 'dropdown'
+          }
+          if (option.multiline) {
+            return 'textArea'
           }
           return 'text'
         }
@@ -177,7 +180,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .component-option {
   display: flex;
   align-items: center;
@@ -204,6 +207,10 @@ export default {
   }
   .be-slider {
     margin: 0 8px;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 16px;
   }
 }
 </style>

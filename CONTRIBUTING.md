@@ -1,17 +1,28 @@
 # 代码贡献指南
 
+Bilibili Evolved 是一个基于 Web 前端技术构建的油猴脚本, 贡献代码前应具备的相关能力有:
+- 了解最基础的油猴脚本的开发流程, 包括理解 [UserScript Header 和 GM API](https://www.tampermonkey.net/documentation.php?locale=en).
+- 熟悉 Web 前端技术, 编写逻辑时使用 [TypeScript](https://www.typescriptlang.org/), 编写样式时使用 [Scss](https://sass-lang.com/), 创建 UI 时使用 [Vue 2](https://v2.cn.vuejs.org/).
+- 新增的代码能够通过 [ESLint](https://eslint.org/) 和 [TypeScript](https://www.typescriptlang.org/) 检查.
+
 ## 搭建开发环境
 
-- 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [yarn](https://yarnpkg.com/getting-started/install#global-install).
+- 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [pnpm](https://pnpm.io/installation) (>= 8.9.0).
 - 将项目 Fork 至自己账户后, 克隆至本地
 - 分支视情况切换或新建, 新功能以 `preview-features` 为基础分支, 功能修复以 `preview-fixes` 为基础分支.
 - 安装依赖:
 
 ```powershell
-yarn
+pnpm install
 cd registry
-yarn
+pnpm install
 ```
+
+- [配置 VS Code 插件](https://code.visualstudio.com/docs/editor/extension-marketplace):
+  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), 用于格式化 TypeScript 和 Vue 文件.
+  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), 用于格式化 Scss 和其他文件.
+  - [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar), 为 *.vue 文件提供支持.
+  - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin), 让 TS Server 识别 *.vue 文件.(建议启用性能更好的 [Takeover 模式](https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode))
 
 ### 本体
 需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发时在 `registry/dist/` 下产生文件.
@@ -19,18 +30,39 @@ yarn
 
 配置本地调试环境:
 
+**启动开发服务 dev-server**
+
+> 无论选择哪种方式, 下文均以 "运行 `启动开发服务 dev-server`" 指代这个步骤.
+
+方式 1 (推荐): 直接使用 [VS Code Tasks](https://code.visualstudio.com/docs/editor/tasks) 运行 `启动开发服务 dev-server`
+
+方式 2:
+1. 新建一个终端, 进入项目根目录
+2. 运行 `pnpm ts-node dev-tools/dev-server/index.ts` 启动开发服务
+
+两种方式都会看到类似下面的输出:
+```bash
+DevServer 已启动, 端口: 23333
+本体编译中...
+(...可能有一长串输出)
+
+本体已编译: （一段 hash）
+```
+
+
 **如果使用的是基于 Chromium 的浏览器**
-1. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
-2. 打开 `允许访问文件网址`
-3. 新建脚本
-4. 粘贴内容:
+1. 启动开发服务后, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
+2. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
+3. 打开 `允许访问文件网址`
+4. 新建脚本
+5. 粘贴内容:
 ```js
 // ==UserScript==
 // @name         Bilibili Evolved (Local)
 // @description  Bilibili Evolved (本地)
 // @version      300.0
 // @author       Grant Howard, Coulomb-G
-// @copyright    2022, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2024, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @exclude      *://*.bilibili.com/*/mobile.html
@@ -63,24 +95,25 @@ yarn
 // @connect      localhost
 // @connect      *
 // @require      https://raw.githubusercontent.com/lodash/lodash/4.17.15/dist/lodash.min.js
+// @require      file://{{ bilibili-evolved.dev.user.js的绝对路径 }}
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
 ```
-6. 在那些 `@require` 下面再添加一行 `@require file://{{ bilibili-evolved.dev.user.js的绝对路径 }}`
-> Windows 例子: `@require file://C:/xxx/Bilibili-Evolved/bilibili-evolved.dev.user.js`
 
-> macOS 例子: `@require file:///Users/xxx/Documents/Bilibili-Evolved/bilibili-evolved.dev.user.js`
+1. 将里面的 `{{ bilibili-evolved.dev.user.js 的绝对路径 }}` 替换为第一步生成的文件的真实路径.
+> Windows 例子: `@require file://C:/xxx/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
+
+> macOS 例子: `@require file:///Users/xxx/Documents/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
 
 > 上面那些其他的 @require 跟 `src/client/common.meta.json` 里的保持一致就行, 偶尔这些依赖项会变动导致这个本地调试脚本失效, 到时候照着改一下就行.
-7. 保存脚本, 运行 `启动开发服务 dev-server` 任务
-8. 进入 b 站, 安装 `DevClient` 组件, 功能中显示已连接时就是成功了
 
+7. 进入 b 站, 安装 `DevClient` 组件, 功能中显示已连接时就是成功了
 
 **如果使用 Firefox 或 Safari**
-1. 运行 `启动开发服务 dev-server` 任务时, 假设得到的本体链接为 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`
-2. 继续 Chromium 指南中的第 3 ~ 6 步, 但在第 6 步时 `@require` 的链接使用 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
-3. 保存脚本, 运行 `启动开发服务 dev-server` 任务
+1. 启动开发服务后, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
+2. 开发服务会在默认的 `23333` 端口服务 `dist/` 文件夹下的内容, 因此上一步的文件链接就为 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
+3. 继续 Chromium 指南中的第 3 ~ 6 步, 但在第 6 步时 `@require` 的链接使用 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
 4. 进入 b 站, 安装 `DevClient` 组件, 将 `本体刷新策略` 设置为 `不刷新`, 功能中显示已连接时就是成功了
 5. 每次本体代码变动后, 需要在 Tampermonkey 中编辑脚本 - 外部, 删除 `localhost` 的缓存文件后刷新生效.
 
@@ -138,12 +171,11 @@ yarn
 
 ## 可用资源
 本体提供了大量 API 供组件 / 插件使用.
+
 ### 全局
 全局变量, 无需 `import` 就可以直接使用. (Tampermonkey API 这里不再列出了, 可根据代码提示使用)
 
-- `Vue`: Vue 库的主对象, 在创建 `.vue` 组件时, 其中的 `<script>` 可以直接使用 `Vue.extend()`
-> 出于历史原因, 项目中用的还是 Vue 2, 由于其糟糕的 TypeScript 支持, 在 VS Code + Vetur 的环境下浏览 `.vue` 文件可能会报各种奇奇怪怪的类型错误, 无视就好. (类型是否正确以 `yarn type` 的结果为准)
-
+- `Vue`: Vue 2 提供的主要对象. 不再推荐使用. 如果需要以选项式方式定义 Vue 组件, 请使用 `defineComponent` 而非 `Vue.extend` 或 `new Vue`.
 - `lodash`: 包含所有 Lodash 库提供的方法
 - `dq` / `dqa`: `document.querySelector` 和 `document.querySelectorAll` 的简写, `dqa` 会返回真实数组
 > 在 `bwp-video` 出现后, 这两个查询函数还会自动将对 `video` 的查询扩展到 `bwp-video`
@@ -229,8 +261,17 @@ yarn
 - `ui/VLoading.vue`: 表示数据加载中, 界面可被插件更改
 - `ui/AsyncButton.vue`: `click` 事件为异步函数时, 执行期间自动使 `Button` 禁用, 其他和 `Button` 相同.
 
+## 代码类型检查
+提交 Pull Request 前, 请确保代码通过类型检查. 类型检查以 VS Code 任务: `生产:类型检查 prod:type` 为准.
+
+> 项目有[计划](https://github.com/the1812/Bilibili-Evolved/discussions/3939)从 Vue 2 迁移到 Vue 3, 因此虽然我们[启用](https://github.com/the1812/Bilibili-Evolved/pull/4337)了 Volar 对 *.vue 文件进行类型检查, 却未完全修复 Volar 报告的类型错误. 因此，开发时 VS Code 报错属正常现象. Pull Request 的类型检查标准仍以上述内容为准.
+
 ## 代码风格检查
-项目中含有 ESLint, 不通过 ESLint 是无法进行 Pull Request 的. 配置基于 `airbnb-base`, `typescript-eslint/recommended`, `vue/recommended` 修改而来, 几个比较特殊的规则如下:
+项目中含有 ESLint, 不通过 ESLint 是无法进行 Pull Request 的.
+
+你可以使用 [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) 插件实时检查当前代码, 也可以运行 `生产:代码检查 prod:lint` 或 `生产:代码修复 prod:lint-fix` 来使用 ESLint 的命令行进行检查.
+
+配置基于 `airbnb-base`, `typescript-eslint/recommended`, `vue/recommended` 修改而来, 几个比较特殊的规则如下:
 
 ### 强制性
 - 除了 Vue 单文件组件, 禁止使用 `export default`, 所有导出必须命名.
@@ -243,12 +284,11 @@ yarn
 - 不需要使用 `this` 特性的函数, 均使用箭头函数.
 
 ## 提交 commit
-仅提交源代码上的修改即可, 不建议把 dist 文件夹里的产物也提交, 否则容易在 PR 时产生冲突.
+仅提交源代码上的修改即可, 不要把 dist 文件夹里的产物也提交, 产物会在发布新版本时在对应的生产分支上构建.
 
 commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式.
 
 ## 发起 PR (合并请求)
 将你的分支往主仓库的 `preview-features` (新增功能) 或 `preview-fixes` (功能修复) 分支合并就行.
 
-## 自行保留
-你可以选择不将功能代码合并到主仓库, 因此也没有 ESLint 的限制. PR 时仅添加指向你的仓库中的组件信息即可, 具体来说, 是在 `registry/lib/docs/third-party.ts` 中, 往对应数组中添加你的功能的相关信息, 当然别忘了把 `owner` 设为你的 GitHub 用户名.
+或者, 也可以选择不将功能代码合并到主仓库, 因此也没有 ESLint 的限制. PR 时仅添加指向你的仓库中的组件信息即可, 具体来说, 是在 `registry/lib/docs/third-party.ts` 中, 往对应数组中添加你的功能的相关信息, 当然别忘了把 `owner` 设为你的 GitHub 用户名.

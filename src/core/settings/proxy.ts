@@ -11,10 +11,7 @@ export const isProxy = Symbol('isProxy')
 export const createProxy = (targetObj: any, valueChangeListener?: ValueChangeListener) => {
   const applyProxy = (obj: any, rootProp?: Property, propPath: Property[] = []) => {
     for (const [key, value] of Object.entries(obj)) {
-      const shouldApplyProxy = (
-        typeof value === 'object'
-        && !(value instanceof RegExp)
-      )
+      const shouldApplyProxy = typeof value === 'object' && !(value instanceof RegExp)
       if (shouldApplyProxy) {
         obj[key] = applyProxy(value, rootProp || key, [...propPath, key])
       }
@@ -28,11 +25,10 @@ export const createProxy = (targetObj: any, valueChangeListener?: ValueChangeLis
       },
       set(o, prop, value) {
         const oldValue = o[prop]
-        const isImplicitProp = (
+        const isImplicitProp =
           !Object.prototype.hasOwnProperty.call(o, prop) && oldValue !== undefined
-        )
         if (unsafeWindow.proxyDebug) {
-          console.log({ isImplicitProp, prop, value })
+          console.log({ isImplicitProp, prop, rootProp, propPath, value, oldValue })
         }
         /**
          * 是否对 value 启用深层 Proxy
@@ -41,12 +37,11 @@ export const createProxy = (targetObj: any, valueChangeListener?: ValueChangeLis
          * - 不能是已经启用过的
          * - 不能是上游原型链里的
          */
-        const deep = (
-          typeof value === 'object'
-          && !(value instanceof RegExp)
-          && !(value[isProxy] === true)
-          && !isImplicitProp
-        )
+        const deep =
+          typeof value === 'object' &&
+          !(value instanceof RegExp) &&
+          !(value[isProxy] === true) &&
+          !isImplicitProp
         if (deep) {
           value = applyProxy(value, rootProp || prop, [...propPath, prop])
         }

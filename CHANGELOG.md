@@ -1,6 +1,1318 @@
+<!-- spell-checker: disable -->
 # 更新日志
 
+## v2.10.0-preview
+`2025-02-25`
+
+包含 [v2.10.0](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.0) 的所有更新内容.
+
+- `插件 - 下载视频 - WASM 混流输出` 在超过 4GB 时支持抛出错误提示. (PR #5102 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `自定义顶栏` 的透明填充在同时开启了全局固定时, 支持下拉后过渡到不透明状态. (#4996)
+- `自定义顶栏` 的弹窗增加了 0.2s 的触发延迟, 防止鼠标快速经过时误触. (#4949)
+- 废弃 `双击全屏` 组件, 本体也不再会屏蔽双击全屏. (#5095)
+
+## v2.10.0
+`2025-02-25`
+
+✨新增
+- 优化 `夜间模式` 在视频页和新版个人空间的适配. (#5121, #5115, PR #5116 by [Pencil](https://github.com/pencilqaq))
+- 动态相关功能支持在新版个人空间里使用. (#5112)
+- `稍后再看` 重定向支持在新版稍后再看列表页里使用. (#4951)
+
+🐛修复
+- 对 `自定义顶栏` 的番剧区分了链接和弹窗两种形式, 避免重名. 若同时开启, 番剧弹窗将自动变为 "追番追剧". (#5087)
+- 修复 `图片批量导出` 在新版动态卡片上不生效. (#5098)
+- 修复 `删除广告` 在视频页清理不干净. (#5110)
+- 修复 `快捷键扩展` 导致在视频页使用方向键选择搜索建议时, 触发了音量调整. (#5119)
+- 修复 `高分辨率图片` 导致部分图片比例不正确 (#5103)
+> 因为 b 站自身基本已经普及 2x 缩放的图片, 如果你的系统缩放比例小于等于 200%, 也不需要在专栏中请求原图, 则可以删除 `高分辨率图片` 组件. `高分辨率图片` 改为只对 200% 缩放以上的屏幕请求更高分辨率的图片.
+
+- 修复 `自定义顶栏` 的排序设置在重新登录后乱序. (#5099)
+- 修复关闭再打开 `自定义顶栏` 后, 其布局设置的界面异常.
+- 修复注入到播放器控制栏按钮的相关功能不生效.
+
+☕开发者相关
+- 优化关于启动 `dev-server` 的文档. (PR #5130 by [undefined](https://github.com/magicFeirl))
+- pnpm 升级至 v10, 启用 corepack.
+
+🗑️废弃
+- 废弃 `签到助手` 中的 `直播间签到`, 因为直播间签到已被 b 站下线.
+
+
+## v2.9.6-preview
+`2024-12-28`
+
+包含 [v2.9.6](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.6) 的所有更新内容.
+
+- 新增插件 `自定义顶栏 - 版权内容`. (#5045)
+> 为自定义顶栏扩充版权内容相关的快速入口, 包括国创 / 电影 / 电视剧 /综艺 / 纪录片
+
+- 视频截图在还有截图未处理 (保存 / 丢弃) 时, 离开页面增加二次确认. (#5066)
+
+## v2.9.6
+`2024-12-28`
+
+✨新增
+- `自定义顶栏` 更新:
+  - (来自 v2.9.5-preview) 历史支持手动刷新. (#4948)
+  - 全局固定适配话题页. (#5039)
+  - 新歌热榜 URL 更新. (#5056)
+  - `订阅` 重命名为 `番剧`, 功能不变. (#4777)
+  - 增加 VLOG, 搞笑, 综艺, 单机游戏入口. (#1511)
+- `传统连播模式` 支持番剧页面. (#5067)
+- `下载视频` 增加选项 `DASH 回退编码`, 默认回退到 AVC, 可以避免 HEVC 回退到 AV1 的情况. (#5080)
+- 新增功能 `隐藏首页轮播图`. (从上一版本废弃的 `简化首页` 中提取) (#5038)
+- `夜间模式` 优化对动态和新版首页的适配. (#5075)
+
+🐛修复
+- 修复 `隐藏头像框` 对部分角标删除不完全. (#5040)
+- 修复 `自定义顶栏` 删除搜索历史时失焦. (#4732)
+- 修复 `自定义顶栏` 未登录时仍能通过功能面板进行排序. (#5051)
+- 修复 `自定义顶栏` 收藏夹的音频链接错误. (#5069)
+- 修复在搜索页的样式冲突. (#5073)
+- 修复 `直播首页静音` 在关闭时仍会导致首页静音. (#5045)
+- 修复 `禁止滚轮调音量` 在 Firefox 中不生效. (#5047)
+- 回退 `直播信息扩充` 的 API 变更. (#4964)
+
+## v2.9.5-preview
+`2024-11-12`
+
+包含 [v2.9.5](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.5) 的所有更新内容.
+
+- `自定义顶栏` 的历史支持手动刷新. (#4948)
+
+## v2.9.5
+`2024-11-12`
+
+<details>
+<summary>正式版用户将获得 v2.9.4-preview 的所有改动, 点击展开查看</summary>
+
+✨新增
+- 新增组件 `隐藏头像框`.
+> 隐藏页面中用户的头像框 (包括角标), 目前支持动态和视频页面.
+
+- 新增组件 `隐藏直播马赛克`. (#4634)
+> 移除直播画面中的马赛克区域.
+
+- 优化了搜索框的搜索建议精准度. (#4833)
+- 新增组件 `删除动态`. (PR #4915 by [gouzil](https://github.com/gouzil))
+> 删除动态, 可选转发抽奖, 和全部删除.
+
+- `保存视频元数据` 增加 FFMETADATA 字段选项. (PR #4943 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- 新增组件 `评论内容替换`. (#4072)
+> 替换评论中的内容.
+> 可以添加多个替换配置, 每项配置可将一个关键词替换为其他文本. 若替换的目标是一个链接, 则视作替换为表情.
+>
+
+- `直播信息扩充` 更换新的 API 接口. (PR #4964 by [Oxygenくん](https://github.com/oxygenkun))
+
+</details>
+
+✨新增
+- 新版视频推荐适配组件:
+  - `显示视频投稿时间` (#4934, PR #4960 by [呼乎户](https://github.com/wisokey))
+  - `隐藏视频推荐`
+  - `选集区域优化`, 其中 `展开选集标题` 选项还可恢复分 P 数的展示
+  - `传统连播模式`
+  - `展开弹幕列表` - `有选集时不自动展开`
+- 优化在线仓库中的搜索逻辑和搜索为空的提示. (#4975, #4973)
+- `自定义顶栏` 的历史支持显示分 P 数信息. (#1866)
+- `删除广告` 更新对首页浮窗广告的屏蔽. (#5001)
+
+🐛修复
+- 修复 `简化直播间` 付费礼物屏蔽失效. (#4968)
+- 修复动态菜单中的扩展菜单项失效. (#4976)
+- `夜间模式` 排除工房页面, 避免文字难以阅读. (#4981)
+- `自定义顶栏` 移除已下线的 `短剧榜` 入口. (#4987)
+- 修复 `删除广告` 导致直播间和个人空间里的动态显示不出来. (#5003)
+- 修复 `网址参数清理` 对需转义的字符处理不正确. (#5009)
+- 修复组件描述在部分页面的标题颜色不正确. (#4995)
+- 修复 `禁止跳转动态详情` 在带图转发动态二次转发后, 查看图片按钮失效. (PR #4980 by [sunfkny](https://github.com/sunfkny))
+- 插件 `下载视频 - WASM 混流输出` 修复写入元数据选项, 新增混流进度, 优化多集下载. (#4840, PR #4984 by [WakelessSloth56](https://github.com/WakelessSloth56))
+
+☕开发者相关
+- `自定义顶栏` 未登录时的阿卡林头像转为内置. (感觉说不定 b 站哪天就把这图删了)
+
+🗑️废弃
+- 废弃 `简化首页` 功能, 请使用 [BewlyBewly](https://github.com/BewlyBewly/BewlyBewly) 替代.
+
+## v2.9.4-preview
+`2024-10-22`
+
+包含 [v2.9.4](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.4) 的所有更新内容.
+
+✨新增
+- 新增组件 `隐藏头像框`.
+> 隐藏页面中用户的头像框 (包括角标), 目前支持动态和视频页面.
+
+- 新增组件 `隐藏直播马赛克`. (#4634)
+> 移除直播画面中的马赛克区域.
+
+- 优化了搜索框的搜索建议精准度. (#4833)
+- 新增组件 `删除动态`. (PR #4915 by [gouzil](https://github.com/gouzil))
+> 删除动态, 可选转发抽奖, 和全部删除.
+
+- `保存视频元数据` 增加 FFMETADATA 字段选项. (PR #4943 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- 新增组件 `评论内容替换`. (#4072)
+> 替换评论中的内容.
+> 可以添加多个替换配置, 每项配置可将一个关键词替换为其他文本. 若替换的目标是一个链接, 则视作替换为表情.
+>
+
+- `直播信息扩充` 更换新的 API 接口. (PR #4964 by [Oxygenくん](https://github.com/oxygenkun))
+
+## v2.9.4
+`2024-10-22`
+
+✨新增
+- `屏蔽黑名单up主` 去除了登录校验. (#4917, PR #4926 by [snowraincloud](https://github.com/snowraincloud))
+- `图片批量导出` 适配新型的图片动态. (#4830)
+- 更新评论区的 `夜间模式`. (#4931)
+
+🐛修复
+- 修复 StreamSaver 和 ffmpeg WASM 的 SRI 校验问题. (#4913, #4864)
+- 修复下载合集时 BV 号命名重复. (#4818)
+- 修复 `删除广告` 去除首页广告时没有遵循 `占位文本` 选项. (#4836)
+- 修复 `自定义顶栏` 历史面板中的多余 title 提示. (#4962)
+- 修复下载弹幕时播放器设置没有正确读取. (#4824)
+
+🗑️废弃
+- `自定义顶栏` 删除 `相簿` 入口.
+
+☕开发者相关
+- 修复 DevClient 无法重载 Shadow DOM 样式.
+
+## v2.9.3-preview
+`2024-09-15`
+
+主要是各种修复, 见 [v2.9.3](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.3).
+
+## v2.9.3
+`2024-09-15`
+
+<details>
+<summary>正式版用户将获得 v2.9.1-preview ~ v2.9.2-preview 的所有改动, 点击展开查看</summary>
+
+✨新增
+- `查看封面` 可以为 aria2 输出提供直接的封面下载. (PR #4798 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增组件 `保存视频元数据`. (PR #4840 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> - 保存视频元数据为 [FFMETADATA](https://ffmpeg.org/ffmpeg-formats.html#Metadata-2) 格式
+>   - 使用组件 `下载视频` 时指定 `WASM` 输出方式（插件 `下载视频 - WASM 混流输出`）可选择是否直接混流入输出文件。
+> - 保存视频章节为 OGM 格式 (https://github.com/the1812/Bilibili-Evolved/discussions/2069#discussioncomment-10110916)
+
+- `简化首页` 支持隐藏轮播图. (PR #4852 by [Lime](https://github.com/Liumingxun))
+- 新增组件 `添加直播间用户超链接`. (PR #4856 by [Light_Quanta](https://github.com/LightQuanta))
+> 网页版直播间右上角的房间观众和大航海界面的用户列表只可查看用户名，不可进行点击。该组件为用户头像和用户名称处添加点击效果，允许通过点击直接查看用户空间。
+
+- 插件 `下载视频 - WASM 混流输出` 支持并行下载库和音视频流. (PR #4864 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `弹幕转义` 支持对正斜杠的换行 (`/n`) 进行转义. (#4865)
+- `自定义顶栏` 支持直接在功能中打开布局设置. (#2666)
+- `高分辨率图片` 支持处理没有指定高度的图片, 支持在专栏页面中请求原图. (#2868)
+- `直播间网页全屏自适应` 样式适配较低的宽度值. (#4895)
+
+☕开发者相关
+- 外部资源接入 Subresource Integrity. (#4896)
+
+</details>
+
+🐛修复
+- 修复 `快速收起评论` 对旧版评论区的兼容性. (#4905)
+- 修复 `快捷键扩展` 的发送评论在新版评论区失效. (#4843)
+- 修复 `禁用评论区搜索词` 偶现样式失效. (#4843)
+
+☕开发者相关
+- `ShadowDomObserver` 在使用前无需再调用 `observe()`.
+- 增加工具方法 `getActiveElement` 检测当前页面的聚焦元素.
+
+## v2.9.2-preview
+`2024-09-08`
+
+包含 [v2.9.2](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.2) 的所有更新内容.
+
+✨新增
+- `弹幕转义` 支持对正斜杠的换行 (`/n`) 进行转义. (#4865)
+- `自定义顶栏` 支持直接在功能中打开布局设置. (#2666)
+- `高分辨率图片` 支持处理没有指定高度的图片, 支持在专栏页面中请求原图. (#2868)
+- `直播间网页全屏自适应` 样式适配较低的宽度值. (#4895)
+
+☕开发者相关
+- 外部资源接入 Subresource Integrity. (#4896)
+
+## v2.9.2
+`2024-09-08`
+
+✨新增
+- `网址参数清理` 支持清理 `is_room_feed`. (PR #4886 by [dreammu](https://github.com/dreammu))
+
+🐛修复
+- 新版评论区相关功能修复: (#4843)
+  - 修复 `快速收起评论` 按钮错位. (#4890)
+  - 恢复功能: `禁用评论区搜索词`, `评论区IP属地显示`, `复制动态链接`.
+  - `简化评论区` 支持 Firefox.
+  - 样式实现使用 [Container style queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_size_and_style_queries#container_style_queries_2) 替代 [:host-context](https://developer.mozilla.org/en-US/docs/Web/CSS/:host-context), 虽然 Firefox 还是不支持, 但是能稍微标准化一点.
+  - 夜间模式适配
+
+☕开发者相关
+- Shadow DOM API (`./src/core/shadow-dom`) 更名为 Shadow Root API (`./src/core/shadow-root`), 模块内的功能导出单例:
+  - `shadowDomObserver`: 持续观测页面上的所有 Shadow DOM.
+  - `shadowRootStyles`: 支持将样式注入到 Shadow DOM 内部.
+- Comments API 增加 `CommentAreaV3` 实现, 支持基于 Shadow DOM 的新版评论区. (#4843)
+- 增加 `isContainerStyleQuerySupported` 来检测当前浏览器对 [Container style queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_size_and_style_queries#container_style_queries_2) 的支持.
+- 组件样式支持在 `ComponentMetadata.instantStyles` 中声明 `shadowDom: true` 来插入到 Shadow DOM 中.
+
+
+## v2.9.1-preview
+`2024-08-15`
+
+包含 [v2.9.1](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.1) 的所有更新内容.
+
+✨新增
+- `查看封面` 可以为 aria2 输出提供直接的封面下载. (PR #4798 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增组件 `保存视频元数据`. (PR #4840 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> - 保存视频元数据为 [FFMETADATA](https://ffmpeg.org/ffmpeg-formats.html#Metadata-2) 格式
+>   - 使用组件 `下载视频` 时指定 `WASM` 输出方式（插件 `下载视频 - WASM 混流输出`）可选择是否直接混流入输出文件。
+> - 保存视频章节为 OGM 格式 (https://github.com/the1812/Bilibili-Evolved/discussions/2069#discussioncomment-10110916)
+
+- `简化首页` 支持隐藏轮播图. (PR #4852 by [Lime](https://github.com/Liumingxun))
+- 新增组件 `添加直播间用户超链接`. (PR #4856 by [Light_Quanta](https://github.com/LightQuanta))
+> 网页版直播间右上角的房间观众和大航海界面的用户列表只可查看用户名，不可进行点击。该组件为用户头像和用户名称处添加点击效果，允许通过点击直接查看用户空间。
+
+- 插件 `下载视频 - WASM 混流输出` 支持并行下载库和音视频流. (PR #4864 by [WakelessSloth56](https://github.com/WakelessSloth56))
+
+## v2.9.1
+`2024-08-15`
+
+<details>
+<summary>正式版用户将获得 v2.9.0-preview 的所有改动 (新功能以及一项废弃), 点击展开查看</summary>
+
+✨新增
+- `简化直播间` 支持屏蔽推荐直播间. (#4787)
+- 新增功能 `删除直播马赛克遮罩` (#4634, PR #4814)
+> 删除观看直播时某些分区的马赛克遮罩.
+
+- `启用视频截图` 截出来的图支持直接复制. (此功能需要 Firefox 127 版本以上) (#4806)
+- `图片批量导出`, `下载视频` 支持更多变量, 详情可在更新组件后查看设置中的说明: (#3852)
+  - 动态 ID, 用户 ID, 动态发布时间, 被转发动态相关数据
+  - 专栏 cv 号, 专栏发布时间
+  - (仅对批量视频下载 (分P / 合集) 有效) up 主名称, up 主 ID, 视频发布时间
+- `自定义顶栏` 的稍后再看和历史面板现在始终显示 "已观看" 状态. (#4346)
+- `自定义顶栏` 的稍后再看, 收藏和历史面板优化了分 P 数和观看进度的展示, 详见[此处](https://github.com/the1812/Bilibili-Evolved/discussions/1866#discussioncomment-10075203). (#1866)
+
+🗑️废弃
+- 删除 `下载视频` 的 Toast 输出方式.
+
+</details>
+
+🐛修复
+- 部分修复 `简化评论区` 在新版评论区下失效. (#4843)
+  - 头像框目前还没找到比较好的方式隐藏, 暂不支持.
+  - 时间由于 Shadow DOM 限制, 无法再挪到右上角了, `装扮 & 时间` 只对装扮有效.
+  - 样式实现依赖 [:host-context](https://developer.mozilla.org/en-US/docs/Web/CSS/:host-context), 因此目前还不支持 Firefox.
+- 修复 `删除视频弹窗` 和 `禁用特殊弹幕样式` 在新版播放器下失效. (#4843, #4823, PR #4839 by [festoney8](https://github.com/festoney8))
+- 修复 `快捷键扩展` 的部分操作和 `启用弹幕空降` 在新版播放器下失效.
+
+☕开发者相关
+- 新增 Shadow DOM 系列 API (`src/core/shadow-dom.ts`), 用于处理 Shadow DOM 相关的逻辑.
+  - `ShadowDomObserver`: 持续观测页面上的所有 Shadow DOM.
+  - `ShadowDomStyles`: 支持将样式注入页面, 包含所有 Shadow DOM 内部.
+- `MutationObserver` 相关的 API 支持使用 `Node` 类型作为目标.
+
+## v2.9.0-preview
+`2024-07-19`
+
+✨新增
+- `简化直播间` 支持屏蔽推荐直播间. (#4787)
+- 新增功能 `删除直播马赛克遮罩` (#4634, PR #4814)
+> 删除观看直播时某些分区的马赛克遮罩.
+
+- `启用视频截图` 截出来的图支持直接复制. (此功能需要 Firefox 127 版本以上) (#4806)
+- `图片批量导出`, `下载视频` 支持更多变量, 详情可在更新组件后查看设置中的说明: (#3852)
+  - 动态 ID, 用户 ID, 动态发布时间, 被转发动态相关数据
+  - 专栏 cv 号, 专栏发布时间
+  - (仅对批量视频下载 (分P / 合集) 有效) up 主名称, up 主 ID, 视频发布时间
+- `自定义顶栏` 的稍后再看和历史面板现在始终显示 "已观看" 状态. (#4346)
+- `自定义顶栏` 的稍后再看, 收藏和历史面板优化了分 P 数和观看进度的展示, 详见[此处](https://github.com/the1812/Bilibili-Evolved/discussions/1866#discussioncomment-10075203). (#1866)
+
+🗑️废弃
+- 删除 `下载视频` 的 Toast 输出方式.
+
+## v2.8.13
+`2024-07-19`
+
+<details>
+<summary>获得 v2.8.12-preview 的所有新功能, 点击展开查看</summary>
+
+✨新增
+- `下载视频 - WASM 混流输出` 支持批量下载. (PR #4726 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `夜间模式` 增加 `color-scheme` meta 信息, 适配 Chrome 的 [Fluent overlay scrollbars](chrome://flags/#fluent-overlay-scrollbars). (#4717)
+
+</details>
+
+✨新增
+- `删除广告` 支持屏蔽首页的 "广告已被屏蔽" 占位卡片.
+- `自定义顶栏` 增加公益、公开课、社区中心入口. (#1511)
+
+🐛修复
+- 修复 `显示视频投稿时间` 时间显示错误及不显示时间的问题. (#4755, PR #4756 by [呼乎户](https://github.com/wisokey))
+- 修复夜间模式的一些适配问题. (#4376, #4768, #4785, #4802, PR #4763, #4810 by [Pencil](https://github.com/pencilqaq))
+- 修复 `屏蔽黑名单up主` 弹窗高度溢出. (PR #4784 by [snowraincloud](https://github.com/snowraincloud))
+- 修复 `自定义顶栏` 搜索框在 b 站搜索页打字时自动弹出. (#4808)
+
+☕开发者相关
+- 修复 GitHub Workflow 中 pnpm 安装失败.
+
+## v2.8.11-preview / v2.8.12-preview
+`2024-05-14`
+
+包含 [v2.8.11](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.11) 的所有更新内容.
+
+✨新增
+- `下载视频 - WASM 混流输出` 支持批量下载. (PR #4726 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `夜间模式` 增加 `color-scheme` meta 信息, 适配 Chrome 的 [Fluent overlay scrollbars](chrome://flags/#fluent-overlay-scrollbars). (#4717)
+
+## v2.8.11 / v2.8.12
+`2024-05-14`
+
+🐛修复
+- 修复了搜索框中的 XSS 注入问题.
+- 修复了搜索框在搜索页面不能同步关键词. (#4721)
+- 修复 `评论区IP属地显示` 失效. (#4690)
+- 在搜索框中删除搜索历史时将不再收起下拉菜单. (#4732)
+- 修复功能反复开关时, 功能面板中的按钮重复出现. (#4731)
+- 修复功能面板空间不足时出现折行. (#4730)
+- 修复 `启用视频截图` 在番剧区失效. (#4719)
+
+☕开发者相关
+- Comment API 调整:
+  - 增加对 `CommentArea` 销毁的监测.
+  - `forEachCommentItem` / `forEechCommentArea` 参数统一支持 `added` 和 `removed` 回调.
+  - `CommentReplyItem` / `CommentItem` 增加属性 `vueProps`.
+
+
+## v2.8.10-preview
+`2024-04-23`
+
+包含 [v2.8.10](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.10) 的所有更新内容.
+
+- 更新了 `动态过滤器` 的描述, 当开启 `直播信息扩充` 时不可配置 `正在直播` 的显隐. (#4705)
+
+## v2.8.10
+`2024-04-23`
+
+<details>
+<summary>获得 v2.8.9-preview 的所有新功能, 点击展开查看</summary>
+
+- `下载视频 - WASM 混流输出` 支持更持久的缓存方式. (PR #4667 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `外置稍后再看` 和 `启用快速收藏` 增加了 `显示方式` 选项, 出现无法自动适配的排版问题时可以尝试手动调整此设置. (#4532)
+- 新增插件 `动态过滤器 - 移除商品带货动态`. (#4425)
+> 移除动态里的商品带货动态 (UP主的推荐 · 来自 XX), 装有 `动态过滤器` 时生效.
+
+- 新增组件 `动态图片平铺展示`. (#4645)
+> 将动态中左右切换式的图片改回传统的平铺展示. (在动态详情中可能稍有延迟)
+
+- 更换了 `自定义顶栏` 的动态提醒数字来源. (#4427)
+
+</details>
+
+✨新增
+- 夜间模式更新对视频和直播页面的样式. (#4701, PR #4675 by [WangYK](https://github.com/AnotiaWang))
+- 增强 `下载视频 - WASM 混流输出` 对错误输入流的检测, 支持 FLAC 音频流 (产生 `.mkv` 文件). (PR #4686 by [DBeidachazi](https://github.com/DBeidachazi))
+- `复制动态链接` 改用 `opus` 格式的链接, 并支持新版话题页面. (PR #4695, PR #4696 by [星海](https://github.com/lovelyCARDINAL))
+- 同时安装了 pakku 时, 支持下载处理后的弹幕. (PR #4712 by [xmcp](https://github.com/xmcp))
+- `传统连播模式` 支持识别和处理视频列表. (#4699, PR #4713 by [Wuch](https://github.com/IEXPECTATION))
+- `删除视频弹窗` 支持屏蔽收起后的弹窗. (#4703)
+
+🐛修复
+- 再次修复 `快速收起评论` 遮挡评论的表情等弹窗.
+- 修复评论区相关功能失效. (#4690)
+- 修复 `自定义顶栏` 导致稍后再看页面布局错位. (#4668)
+
+☕开发者相关
+- Comment API 现已重构并支持 Vue 3 版本的评论区. (#4690)
+
+## v2.8.9-preview
+`2024-03-09`
+
+包含 [v2.8.9](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.9) 的所有更新内容.
+
+✨新增
+- `下载视频 - WASM 混流输出` 支持更持久的缓存方式. (PR #4667 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `外置稍后再看` 和 `启用快速收藏` 增加了 `显示方式` 选项, 出现无法自动适配的排版问题时可以尝试手动调整此设置. (#4532)
+- 新增插件 `动态过滤器 - 移除商品带货动态`. (#4425)
+> 移除动态里的商品带货动态 (UP主的推荐 · 来自 XX), 装有 `动态过滤器` 时生效.
+
+- 新增组件 `动态图片平铺展示`. (#4645)
+> 将动态中左右切换式的图片改回传统的平铺展示. (在动态详情中可能稍有延迟)
+
+- 更换了 `自定义顶栏` 的动态提醒数字来源. (#4427)
+
+
+## v2.8.9
+`2024-03-09`
+
+✨新增
+- `下载视频 - IDM 输出支持` 补充了保留文件名相关内容的描述. (PR #4664 by [LY](https://github.com/Young-Lord))
+- 夜间模式更新对以下区域的支持:
+  - 新版评论区输入框 (#4605)
+  - 动态详情页
+  - 搜索页面 (#4354)
+- `删除广告` 现在可以在新版首页中将删除后的空位移除. (#4610)
+- `删除视频弹窗` 支持屏蔽 "请评价视频播放效果" 等小弹窗, 归属于投票类. (#4610)
+
+🐛修复
+- 修复 XML 弹幕下载遇到空弹幕时报错. (#4629)
+- 修复播放前显示封面在中途暂停仍会出现. (#4491)
+- 修复 `自定义顶栏` 的搜索结果描述溢出. (#4464)
+- 修复自动关灯无效. (PR #4659 by [Waua](https://github.com/FoundTheWOUT), #4631)
+- 修复 `网址参数清理` 导致搜索页出现 `https://search.bilibili.com/undefined`. (PR #4663 by [sunfkny](https://github.com/sunfkny), #4656)
+- 修复 `禁止跳转动态详情` 导致动态中的查看图片按钮失效. (PR #4662 by [sunfkny](https://github.com/sunfkny))
+- 修复 `展开动态内容` 对部分用户失效. (#4633)
+- 修复 `高分辨率图片` 导致旧版首页 logo 比例出错. (#4480)
+- 修复个人空间中搜索过动态后再返回导致常规动态里的相关功能失效. (#4458)
+- 修复番剧区的 `扩展倍速` 失效. (#4571)
+- 修复 `快速收起评论` 遮挡评论的表情等弹窗.
+- 修复 `自定义顶栏` 导致网课分区内容错位. (#4610)
+- 修复 `隐藏顶部横幅` 导致部分分区页面内容错位. (#4610)
+
+☕开发者相关
+- PlayerAgent 支持监听 `pause` 事件.
+- `forEachFeedsCard` 现在不会在非动态页面执行.
+
+## v2.8.8 / v2.8.8-preview
+`2024-01-18`
+
+<details>
+<summary>正式版用户将获得 v2.8.6-preview ~ v2.8.7-preview 的所有新功能, 点击展开查看</summary>
+
+✨新增
+- 新增插件 `下载视频 - MPV 输出支持加强版`. (PR #4448 by [weapon!](https://github.com/Asukaaaaaa))
+> 同时支持单文件和多文件, 不需要额外下载程序处理 mpv 协议, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)
+
+- `查看封面` 组件安装后可为 `下载视频` 提供下载封面支持. (#889, PR #4473 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增插件 `下载视频 - WASM 混流输出`. (PR #4521 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> 使用 WASM 在浏览器中下载并合并音视频，运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件
+
+- 使用流量计费网络时, 不再触发本体和功能的更新检查. (仅 Chrome) (#4477)
+- `快捷键扩展` 的音量调整支持自定义幅度. (#2594)
+- `自定义字体` 改善了组件代码和功能. (PR #4485 by [Tinhone](https://github.com/Tinhone))
+
+☕开发者相关
+- PlayerAgent API 重构为调用 `window.player` 和 `window.nano` API, 可以解决 #2544 的问题, 感谢 [timongh](https://github.com/timongh) 和 [WakelessSloth56](https://github.com/WakelessSloth56) 的发现. (#4330, #4341)
+
+</details>
+
+⚠ 注意
+- Firefox 的最低版本要求提升至 121, 顺便更新了下配置要求, 分为了最低配置和推荐配置, CPU 统一为桌面级型号.
+- 移除对旧版视频播放器的支持, 仅支持新版视频播放器 (BPX 播放器)
+
+✨新增
+- 新增插件 `动态过滤器 - 移除充电专属动态`. (#4033)
+> 移除动态里的充电专属动态, 装有 `动态过滤器` 时生效.
+
+- `删除视频弹窗` 支持屏蔽 "心动" 弹窗, `禁用特殊弹幕样式` 支持屏蔽相应的带货弹幕. (#4565)
+- `删除广告` 支持屏蔽首页的桌面端弹窗广告. (#4590)
+- 新增插件 `下载视频 - 空输出`. (#4581)
+> 提供一个 "空" 的输出选项, 只想获取下载视频的附带产物 (弹幕, 字幕等) 时可以使用此插件.
+
+- `下载视频` 支持下载合集. (#3240)
+- 视频相关功能和快捷键扩展支持新版番剧播放器. (#4571)
+
+🐛修复
+- 修复 `评论区IP属地显示` 在小黑屋中失效的问题. (#4572, PR #4573 by [Light_Quanta](https://github.com/LightQuanta))
+- `自定义字体` 改进: (PR #4585 by [Tinhone](https://github.com/Tinhone))
+  - 修复 `自定义字体` 导致快速收藏图标消失. (#4566)
+  - 将 `覆盖选项` 迁移到了更多选项中.
+  - 因为文泉驿微米黑（WenQuanYi Micro Hei）字体的部分版本存在朝鲜语（韩语）显示不正确的问题，所以从默认设置中删除，使用 Malgun Gothic 字体替换.
+- 夜间模式适配播放页的充电卡片. (#4599, PR #4600 by [Pencil](https://github.com/pencilqaq))
+- `直播信息扩充` 使用新的 API, 能够显示悄悄关注的主播. (PR #4587 by [Oxygenくん](https://github.com/oxygenkun))
+- 修复自定义顶栏在搜索页面的表现: 关键词同步 & 禁用全局固定. (#1431)
+- `删除广告` 使用 CSS `:has` 功能实现了移除广告的空白占位区域. (#3997)
+- 修复新版的动态多图界面中 `图片批量导出` 检测不到图片. (#4586)
+- 修复使用 `pluginApis.installStyle` 安装带有特殊字符的名称的样式后, 无法删除的问题. (#4557)
+- 修复快速收起评论遮挡了评论的操作菜单. (#4595)
+- 更新了 `稍后再看重定向` 的说明文字, 明确了功能作用范围. (#4555)
+> 将稍后再看的链接重定向为普通播放网址.
+> - `重定向页面`: 对稍后再看列表页面里的链接重定向.
+> - `重定向顶栏`: 对 `自定义顶栏` 里的稍后再看链接重定向.
+
+- 修复文件命名格式中 `[title]`, `[ep]`, `[lid]` 变量的值获取不正确. (#4575)
+
+☕开发者相关
+- pnpm 更新至 8.12.1.
+- README 调整了一些中英文字符之间的空格. (PR #4602 by [Shen-Linwood](https://github.com/Shen-Linwood))
+- PlayerAgent.getPlayerConfig 支持 BPX 播放器, 且默认认为当前 Agent 为 BPX 类型.
+- 修复 DownloadPackage 中同名文件会互相覆盖. (#4576)
+- 动态过滤器中使用 CSS `.plugin-block` 可以隐藏某个动态卡片, 插件结合 `forEachFeedsCard` 等 API 可以实现自定义的过滤逻辑. (#4033)
+- retrieveImageUrl 支持传入 picture 元素本身.
+- 内置 UA 更新至 Firefox 123.
+- 增加了 simulateClick API, 可以模拟一次点击. (依次触发 `pointerdown`, `mousedown`, `pointerup`, `mouseup`, `click` 事件)
+
+## v2.8.7 / v2.8.7-preview
+`2023-11-23`
+
+- 修复正式版中清爽首页无法加载的问题. (#4538)
+
+其他更新内容请看 [v2.8.6](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.6) / [v2.8.6-preview](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.6-preview).
+
+## v2.8.6-preview
+`2023-11-22`
+
+包含 [v2.8.6](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.6) 的所有更新内容.
+
+✨新增
+- 新增插件 `下载视频 - MPV 输出支持加强版`. (PR #4448 by [weapon!](https://github.com/Asukaaaaaa))
+> 同时支持单文件和多文件, 不需要额外下载程序处理 mpv 协议, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)
+
+- `查看封面` 组件安装后可为 `下载视频` 提供下载封面支持. (#889, PR #4473 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增插件 `下载视频 - WASM 混流输出`. (PR #4521 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> 使用 WASM 在浏览器中下载并合并音视频，运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件
+
+- 使用流量计费网络时, 不再触发本体和功能的更新检查. (仅 Chrome) (#4477)
+- `快捷键扩展` 的音量调整支持自定义幅度. (#2594)
+- `自定义字体` 改善了组件代码和功能. (PR #4485 by [Tinhone](https://github.com/Tinhone))
+
+☕开发者相关
+- PlayerAgent API 重构为调用 `window.player` 和 `window.nano` API, 可以解决 #2544 的问题, 感谢 [timongh](https://github.com/timongh) 和 [WakelessSloth56](https://github.com/WakelessSloth56) 的发现. (#4330, #4341)
+
+## v2.8.6
+`2023-11-22`
+✨新增
+- `清爽首页` / `极简首页` 现在可以正确重定向 "悬浮视频". (#4404)
+- `网址参数清理` 增加 `spmid` 参数. (#4512)
+- `快捷键扩展` 默认不再启用前进/后退的快捷键 (默认使用 b 站的前进/后退). (#4501)
+- `展开动态内容` 现在不会展开专栏类型的动态, 并保留原来的 "全文" 按钮. (#4475)
+
+🐛修复
+- 修复了首页的正式版安装链接 CDN 不正确. (#4460)
+- 修复 `极简首页` 在特定情况下无法触发加载的问题. (#4302, PR #4430 by [Tinhone](https://github.com/Tinhone))
+- 调整了 `简化评论区` 和 `删除广告` 对评论区附近的活动横幅和小喇叭横幅的说明, 关于这两种元素的具体区别以及分配至的组件, 可以参考 #4444 中的讨论.
+- 修复 `直播信息扩充` 中的标题未处理转义的 HTML 特殊字符.
+- 修复 `BV 号转换` 复制的链接即使没有参数也会带上末尾的 `?`. (#4515)
+- 修复番剧片单页面出现报错. (#1999)
+- 修复 `自定义顶栏` 历史面板无法正确跳转课程. (#4484)
+- 修复 `自定义顶栏` 在历史记录页面产生的布局错位. (#4459)
+- 修复 `网址参数清理` 处理相对路径 URL 时产生了错误的结果. (#4471)
+- 修复 `自定义顶栏` 在专栏页面挡住了作者信息顶栏. (#4540)
+
+☕开发者相关
+- 锁定了 PR Check 中的 pnpm 版本, 避免 pnpm 更新后出现不兼容 lockfile 导致 PR Check 失败.
+- `夜间模式` 增加了一篇详细的[开发文档](./registry/lib/components/style/dark-mode/README.md).
+- Microsoft Edge 不再作为首要兼容的浏览器. (和 Chrome 相同内核, 理论上兼容性不会有太大差别)
+
+## v2.8.5 / v2.8.5-preview
+`2023-09-24`
+
+✨新增
+- 新增组件 `自定义字体`. (PR #4406 by [Tinhone](https://github.com/Tinhone))
+> 使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明
+
+- `简化直播间` 适配了新版 PK 条. (PR #4439 by [Pencil](https://github.com/pencilqaq))
+
+- `下载视频` 支持配置 DASH 格式下的文件扩展名. (PR #4449 by [小傅Fox](https://github.com/xfoxfu))
+
+
+<details>
+<summary>正式版用户将获得 v2.8.0-preview ~ v2.8.4-preview 的所有新功能, 点击展开查看</summary>
+
+- `清爽首页` 改进:
+  - 支持自定义板块的布局和可见性. (操作方式和自定义顶栏那个差不多)
+  - 番剧时间表优化样式, 增加翻页按钮.
+
+<div>
+  <img height="400" src="https://user-images.githubusercontent.com/26504152/242905984-895cb72c-b344-40c3-91a0-2a6b20d5f783.png">
+  <img height="400" src="https://user-images.githubusercontent.com/26504152/242905640-cbc948f1-734e-46f2-96a7-d57787b7cf47.png">
+</div>
+
+- 新增功能 `首页净化`. (PR #4153 by [RieN](https://github.com/rien7))
+> 删除首页特定类型的卡片.
+
+- `自定义顶栏` 增加 `创作中心` 入口, `排行` 新增 `全站音乐榜` 和 `短剧榜` 的入口. (#4101, PR #4154 by [星海](https://github.com/lovelyCARDINAL), PR #4155 by [星海](https://github.com/lovelyCARDINAL))
+- `播放器置顶（新）` 增加选项 `顶部留白`. (#4152, PR #4165 by [Ziu](https://github.com/ZiuChen))
+- `播放器置顶（新）` 的标题改为放置到播放器和点赞中间. (PR #4208 by [LockRim](https://github.com/LockRim))
+- `显示视频投稿时间` 支持转义字符. (#4160, PR #4167 by [呼乎户](https://github.com/wisokey))
+- `隐藏视频推荐` 支持稍后再看和收藏夹播放页, 并适配 bpx 播放器. (#4174)
+- 新增功能 `隐藏记笔记` 和 `隐藏稿件投诉`. (#4124)
+- 优化了 `自定义顶栏` 中订阅在筛选时的 API 调用. (#4120)
+- 优化粗体的显示: 优先调用 Semibold 字重, 若字体不支持则使用 Bold 字重.
+- `自定义顶栏` 增加选项:
+  - 支持自定义消息提醒样式, 可设置为 `数字`, `点状` 或 `隐藏`. (#4125)
+  - 支持自定义搜索栏宽度. (#4112)
+- 搜索在纯数字输入时, 增加对 UID 和直播间的搜索. (#677)
+- `网址参数清理` 更新对直播间的支持. (#1459)
+- `自动点赞` 转为由 [CrazyboyQCD](https://github.com/CrazyboyQCD) 维护, 支持手动控制点赞和黑名单功能. (PR #4343, PR #4358 by [CrazyboyQCD](https://github.com/CrazyboyQCD))
+
+- `简化直播间` 支持隐藏荣耀等级勋章. (PR #4348 by [CrunchyShark](https://github.com/CrunchyShark944))
+- 在设置面板中的组件管理等面板中, 搜索框移动至已安装列表的上方, 更符合直觉. (#3806)
+- 支持从 Tampermonkey 的菜单中唤起功能和设置面板. (#4170)
+- 搜索栏中添加了导入 / 导出设置的操作. (#4170)
+- `自定义顶栏` 新增选项 `链接对齐样式`, 可以自定义纯链接弹窗内链接文字的对齐样式. (PR #4365 by [Tinhone](https://github.com/Tinhone))
+- `简化评论区` 支持独立控制简化选项, 并支持隐藏粉丝勋章和活动横幅. (仅支持新版评论区) (#2381)
+- `清爽首页` 设置为隐藏的版块现在将彻底销毁, 减少资源占用.
+- `禁用特殊弹幕样式` 支持禁用大会员弹幕. (#4227)
+- `下载视频` 在批量下载番剧时, 支持下载多个不同板块的选集. (#2834)
+- 新增功能 `全屏直播礼物简化`. (PR #4306 by [TimmyOVO](https://github.com/TimmyOVO))
+
+> 移除全屏观看直播时的底部礼物栏
+
+- 新增功能 `评论区 IP 属地显示`. (PR #4331, PR #4334 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在评论区显示评论的IP属地信息
+
+- 新增功能 `直播间网页全屏自适应`. (#4216)
+
+> 在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果. 如果在侧边栏的边缘拖动, 可以自定义侧边栏的固定宽度, 双击边缘可以还原到自动宽度.
+>
+> - `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)
+>
+> > 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.
+
+- 新增功能 `关注时间显示`. (PR #4352 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在个人空间的粉丝/关注列表显示关注的具体时间
+
+- 新增功能 `自动移出稍后再看`.
+
+> 在稍后再看页面播放结束时, 自动将当前视频移出稍后再看.
+> 注意:
+> - 一定要播放结束, 快结束时手动切走不算
+> - b 站的稍后再看列表不会实时刷新
+
+- 新增功能 `相簿发布时间显示`. (PR #4362 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在个人空间的相簿界面显示相簿的发布时间
+
+</details>
+
+🐛修复
+- 修复 `禁止滚轮调音量` 在网页全屏下失效. (#4381).
+- 修复 Feeds API 无法解析新版图文动态的文字内容. (主要是动态过滤器会受影响) (#4409)
+- 修复 `选集区域优化` 在部分视频合集页面上无法使用 <kbd>Alt</kbd> 来切换折叠. (#4429)
+- 修复被转发图文动态的 `详情 >` 功能失效. (PR #4452 by [sunfkny](https://github.com/sunfkny))
+
+
+## v2.8.4-preview
+`2023-09-07`
+
+包含 [v2.7.6](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.7.6) 的所有更新内容.
+
+- `直播间网页全屏自适应` 支持自定义侧边栏宽度. (#4216)
+- 修复 `直播勋章快速更换` 获取头衔列表时报错. (#4403)
+
+## v2.7.6
+`2023-09-07`
+
+更新了动态相关的 API 地址, 修复番剧无法加载的问题. (#4305)
+
+
+## v2.8.3-preview
+`2023-08-26`
+
+包含 v2.7.5 的所有更新内容.
+
+✨新增
+- `网址参数清理` 更新对直播间的支持. (#1459)
+- `自动点赞` 转为由 [CrazyboyQCD](https://github.com/CrazyboyQCD) 维护, 支持手动控制点赞和黑名单功能. (PR #4343, PR #4358 by [CrazyboyQCD](https://github.com/CrazyboyQCD))
+
+- `简化直播间` 支持隐藏荣耀等级勋章. (PR #4348 by [CrunchyShark](https://github.com/CrunchyShark944))
+- 在设置面板中的组件管理等面板中, 搜索框移动至已安装列表的上方, 更符合直觉. (#3806)
+- 支持从 Tampermonkey 的菜单中唤起功能和设置面板. (#4170)
+- 搜索栏中添加了导入 / 导出设置的操作. (#4170)
+- `自定义顶栏` 新增选项 `链接对齐样式`, 可以自定义纯链接弹窗内链接文字的对齐样式. (PR #4365 by [Tinhone](https://github.com/Tinhone))
+- `简化评论区` 支持独立控制简化选项, 并支持隐藏粉丝勋章和活动横幅. (仅支持新版评论区) (#2381)
+- `清爽首页` 设置为隐藏的版块现在将彻底销毁, 减少资源占用.
+- `禁用特殊弹幕样式` 支持禁用大会员弹幕. (#4227)
+- `下载视频` 在批量下载番剧时, 支持下载多个不同板块的选集. (#2834)
+- 新增功能 `全屏直播礼物简化`. (PR #4306 by [TimmyOVO](https://github.com/TimmyOVO))
+
+> 移除全屏观看直播时的底部礼物栏
+
+- 新增功能 `评论区 IP 属地显示`. (PR #4331, PR #4334 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在评论区显示评论的IP属地信息
+
+- 新增功能 `直播间网页全屏自适应`. (#4216)
+
+> 在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果.
+>
+> - `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)
+>
+> > 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.
+
+- 新增功能 `关注时间显示`. (PR #4352 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在个人空间的粉丝/关注列表显示关注的具体时间
+
+- 新增功能 `自动移出稍后再看`.
+
+> 在稍后再看页面播放结束时, 自动将当前视频移出稍后再看.
+> 注意:
+> - 一定要播放结束, 快结束时手动切走不算
+> - b 站的稍后再看列表不会实时刷新
+
+- 新增功能 `相簿发布时间显示`. (PR #4362 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在个人空间的相簿界面显示相簿的发布时间
+
+🐛修复
+- 修复 `清爽首页` 番剧区图标不显示. (#4262)
+- 修复 `清爽首页` 番剧区时间线的遮罩颜色在夜间模式下不正确.
+- 修复 `隐藏记笔记` 功能打开后, 评论区的笔记弹窗无法显示. (#4285)
+
+☕开发者相关
+- SwitchOptions API 更新:
+  - 老的 `createSwitchOptions` 标记为已弃用.
+  - 新的 `newSwitchComponentWrapper` 更名为 `wrapSwitchOptions`.
+  - `checkedIcon` 拥有默认值: `mdi-eye-off-outline`.
+  - `notCheckedIcon` 拥有默认值: `mdi-eye-outline`.
+  - `dimAt` 选项功能更改为如下所示, 更符合直觉:
+```ts
+/**
+ * 控制开关变暗的时机
+ *
+ * `false`: 始终不变暗
+ * `'checked'`: 当开关开启时变暗
+ * `'notChecked'`: 当开关关闭时变暗
+ *
+ * @default 'checked'
+ */
+dimAt?: false | 'checked' | 'notChecked'
+```
+- Vue 升级到 2.7, 支持组合式 API 以及使用 Volar 提供代码提示. (PR #4337 by [timongh](https://github.com/timongh))
+- 修复组件加载失败时没有输出任何报错.
+
+## v2.7.5
+`2023-08-26`
+
+✨新增
+- 夜间模式适配新版番剧播放页面. (PR #4366 by [QwExZy@0xx1](https://github.com/qwaszx-WXY))
+
+🐛修复
+- 修复下载弹幕的数量比实际要少. (#4287)
+- jsDelivr 源域名由 `fastly.jsdelivr.net` 更换为 `cdn.jsdelivr.net`. (#4198)
+- 修复 `快速收起评论区` 在新版动态下宽度不正确. (#4282)
+- 修复删除搜索历史时选项不会立即消失. (#4268)
+- 修复 `直播全屏包裹` 的颜色问题. (#4166, PR #4323 by [CrazyboyQCD](https://github.com/CrazyboyQCD))
+- 修复 `下载字幕` 失效, 注意由于 b 站接口变更, AI 字幕可能无法下载. (#4319)
+- 修复 `隐藏视频推荐` 未能隐藏番剧页面的相关推荐. (#4247)
+- 修复 `自定义顶栏` 中封面图片在个人空间的样式异常. (#4312, PR #4338 by [timongh](https://github.com/timongh))
+- 修复 `简化直播间` 屏蔽标题栏活动后, 粉丝团打榜弹窗位置异常. (#4215)
+- 修复 `传统连播模式` 在点击右侧推荐视频时会延后一次. (#4256)
+
+☕开发者相关
+- 修复 VPopup 组件中 openHandler 的 this 绑定丢失. (#4264)
+- 重构了 Comments API. (#4334)
+  - `CommentReplyItem` 实现了 `EventTarget`, 评论更新事件 (`repliesUpdate`) 均通过 `EventTarget` 的事件订阅实现.
+  - 修复新版评论区下评论更新事件没触发.
+- 重构了 `playerModePolyfill` 的实现, 解决 empty class token 在页面上反复报错的问题.
+
+## v2.7.4 / v2.8.2-preview
+`2023-07-16`
+
+- 修复 v4.2 播放器下视频相关功能失效. (#4303)
+
+注: 下载字幕还是会失败, 属于另一个问题 (#4319), 需要另外再修复.
+
+
+## v2.7.3 / v2.8.1-preview
+`2023-07-13`
+
+- 修复 VideoInfo 报错 `Cannot read properties of null (reading 'list')`. (影响 `下载字幕`, `查看封面` 等功能) (#4291)
+
+## v2.8.0-preview
+`2023-06-03`
+
+包含 v2.7.2 的所有更新内容.
+
+✨新增
+
+- `清爽首页` 改进:
+  - 支持自定义板块的布局和可见性. (操作方式和自定义顶栏那个差不多)
+  - 番剧时间表优化样式, 增加翻页按钮.
+
+<div>
+  <img height="400" src="https://user-images.githubusercontent.com/26504152/242905984-895cb72c-b344-40c3-91a0-2a6b20d5f783.png">
+  <img height="400" src="https://user-images.githubusercontent.com/26504152/242905640-cbc948f1-734e-46f2-96a7-d57787b7cf47.png">
+</div>
+
+- 新增功能 `首页净化`. (PR #4153 by [RieN](https://github.com/rien7))
+> 删除首页特定类型的卡片.
+
+- `自定义顶栏` 增加 `创作中心` 入口, `排行` 新增 `全站音乐榜` 和 `短剧榜` 的入口. (#4101, PR #4154 by [星海](https://github.com/lovelyCARDINAL), PR #4155 by [星海](https://github.com/lovelyCARDINAL))
+- `播放器置顶（新）` 增加选项 `顶部留白`. (#4152, PR #4165 by [Ziu](https://github.com/ZiuChen))
+- `播放器置顶（新）` 的标题改为放置到播放器和点赞中间. (PR #4208 by [LockRim](https://github.com/LockRim))
+- `显示视频投稿时间` 支持转义字符. (#4160, PR #4167 by [呼乎户](https://github.com/wisokey))
+- `隐藏视频推荐` 支持稍后再看和收藏夹播放页, 并适配 bpx 播放器. (#4174)
+- 新增功能 `隐藏记笔记` 和 `隐藏稿件投诉`. (#4124)
+- 优化了 `自定义顶栏` 中订阅在筛选时的 API 调用. (#4120)
+- 优化粗体的显示: 优先调用 Semibold 字重, 若字体不支持则使用 Bold 字重.
+- `自定义顶栏` 增加选项:
+  - 支持自定义消息提醒样式, 可设置为 `数字`, `点状` 或 `隐藏`. (#4125)
+  - 支持自定义搜索栏宽度. (#4112)
+- 搜索在纯数字输入时, 增加对 UID 和直播间的搜索. (#677)
+
+☕开发者相关
+- 播放器模式转换出的 bpx class 更换为更统一的名称, 并增加事件派发. (PR #4191 by [Ziu](https://github.com/ZiuChen))
+- 需要选择组件 / 插件的构建任务中, 优化了选项的长度. (PR #4192 by [Ziu](https://github.com/ZiuChen))
+- 弃用 utils 中的 `formData`. (名称具有歧义, 应使用 `URLSearchParams` 来代替)
+- `addComponentListener` / `removeComponentListener` 支持传入多层的组件 options 路径.
+- 移除依赖 `vue-fragment`. (使用 `display: contents` 代替)
+
+## v2.7.2
+`2023-06-03`
+
+> ⚠ 对浏览器的要求中, Safari 提升至 15.4
+
+✨新增
+
+<details>
+<summary>获得 v2.6.1-preview ~ v2.7.1-preview 的所有新功能, 点击展开查看</summary>
+
+- `自定义顶栏` 搜索优化:
+  - 提高了搜索 av 号 / BV 号结果的优先级, 输入编号后直接回车就可以前往视频.
+  - 支持搜索多种 ID, 可以通过安装对应的插件来使用: (#677)
+    - 搜索 av / BV 号时, 支持显示视频标题
+    - 支持搜索专栏 cv 号 / 文集 rl 号
+    - 支持搜索音频 au 号 / 播放列表 am 号
+    - 支持搜索番剧 ss / ep 号, 或番剧详情 md 号
+    - 支持搜索用户 uid 号
+    - 纯数字输入时, 支持同时搜索视频和专栏
+- `自定义顶栏` 的收藏和稍后再看支持显示数量. (#4069)
+- `自定义顶栏` 的订阅支持过滤 在看 / 看过 / 想看. (#3217)
+- 添加跨域存储功能 (`crossOriginLocalStorage`), 支持搜索历史跨域同步. (#3893)
+- 新增功能 `弹幕转义`. (#3470)
+> 将弹幕中的 `\n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.
+- 新增功能 `组件二等分`, 在出现问题时可帮助定位是哪个组件导致的问题. (#3829, PR #3965 by [JLoeve](https://github.com/LonelySteve))
+- 优化了 `网址参数清理` 的逻辑, 通过 Hook History API 来减少出现重复的历史记录. (#4039)
+- 新增功能 `隐藏热搜`. (#3744)
+> 隐藏搜索栏和搜索页面中的 `bilibili 热搜`.
+- 新增功能 `隐藏视频分享`. (#3663)
+> 隐藏视频和番剧播放器下方的分享按钮.
+- 新增插件 `快捷键扩展 - 开关灯`. (#3587)
+> 在快捷键的动作列表里添加一个 "开关灯".
+- `显示视频投稿时间` 允许自定义替换文本格式. (PR #4136 by [呼乎户](https://github.com/wisokey))
+- `清爽首页` 排行榜支持切换为列表模式, 能够查看 10 项左右的排行. (#3611, #3175)
+- 新增功能 `动态看图自动回顶`. (#4029)
+> 在动态里查看图片详情时 (非全屏), 切换图片自动回到图片顶部; 退出查看图片模式时, 自动将动态移入视图内.
+- 重构了 `直播信息扩充` 面板, 改为完全自主实现, 支持显示超过 10 条的直播间, 并可以进行搜索和刷新操作. (#3774, #4035, #4034)
+
+<img src="https://user-images.githubusercontent.com/26504152/234049176-7ae3e3cf-6956-4efe-aec1-66218d940c93.png" width="300">
+
+- 新增功能 `反转滚轮调音量`. (#4053)
+> 反转在网页全屏 / 全屏模式下使用滚轮调节音量的方向, 使其更符合使用触控板时的操作方向. 请注意不能和 `禁止滚轮调音量` 一同使用.
+> - 手指向上推时, 增加音量
+> - 手指向下推时, 减少音量
+> - 可以自定义 `灵敏度`, 同样的滚动幅度下, 灵敏度越高变化的音量越多
+
+- 新增功能 `自动点赞`. (#2354)
+> 进入视频 / 查看动态时, 自动点赞.
+
+- 新增功能 `隐藏用户信息卡片`. (PR #4093 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> 隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片.
+
+- 新增功能 `播放器置顶（新）`. (#3030, #PR #4152 by [RieN 7z](https://github.com/rien7))
+> 原来的播放器置顶组件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.
+
+- 启用新的代码加载方式. (PR #3938 by [timongh](https://github.com/timongh))
+- Comments API 支持读取评论图片. (PR #4130 by [manip_ego](https://github.com/manipEgo))
+```diff
+export interface CommentItem extends CommentReplyItem {
++  /** 评论图片 */
++  pictures?: string[]
+  /** 回复 */
+  replies: CommentReplyItem[]
+  // ...
+}
+```
+
+</details>
+
+- `网址参数清理` 增加清理会员购和直播间的一些参数. (PR #4189, PR #4214 by [星海](https://github.com/lovelyCARDINAL))
+- `删除广告` 增加选项 `保留小喇叭通知`. (PR #4199 by [imshixin](https://github.com/imshixin))
+> 指评论区上方的小喇叭通知, 待 `简化评论区` 完成功能拆分后会移动到那边去.
+
+- `与 "解除 B 站区域限制" 互斥` 现在不再在番剧详情页面生效. (#4157)
+
+🐛修复
+- 修复播放器模式切换时 `body` 类名响应问题. (PR #4188 by [Ziu](https://github.com/ZiuChen))
+- 修复 `播放器控制栏背景色` 位置不正确. (#3713)
+- 修复勋章过多时, `直播勋章快速更换` 的弹窗溢出视图. (#4181)
+- 修复 `清爽首页` 在非内测首页上无法隐藏原版首页. (#3981)
+- 修复 `自定义顶栏` 导致分区页面内容错位. (#4183)
+- 修复 `删除广告` 未能删除活动横幅. (#4177)
+- 修复 `外置稍后再看` 没有隐藏菜单中的相同选项. (#4175)
+- 修复 `直播全屏包裹` 的一部分样式问题. (#4166, #4210)
+- 修复检查更新的查看详情弹窗内容溢出. (#4164)
+- 修复 `播放前显示封面` 在预览关联视频时封面消失. (#4197)
+- 修复 `禁止跳转动态详情` 对新版专栏卡片无效.
+- 修复 `动态过滤器` 在切换了 UP 主过滤后失效. (#4149)
+- 修复 `简化直播间` 的 `标题栏活动` 内容出现溢出. (#4215)
+- 新版动态页面适配:
+  - `快速收起评论区`
+  - `addMenuItem` API (涉及 `图片批量导出` 和 `复制动态链接`)
+  - `强制固定动态侧栏`: 由于 class 名称和旧版一样, 目前只能先把宽度也锁死在旧版的宽度.
+  - `夜间模式`
+  - `feedsCardsManager` API
+
+☕开发者相关
+- GitHub 相关配置更换为 JSON 格式, 并由脚本自动生成 YAML.
+- 增加了讨论区 `功能建议` 的模板.
+
+## v2.7.1-preview
+`2023-04-25`
+
+包含 [v2.7.1](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.7.1) 的所有更新内容.
+
+- Comments API 支持读取评论图片. (PR #4130 by [manip_ego](https://github.com/manipEgo))
+```diff
+export interface CommentItem extends CommentReplyItem {
++  /** 评论图片 */
++  pictures?: string[]
+  /** 回复 */
+  replies: CommentReplyItem[]
+  // ...
+}
+```
+- `显示视频投稿时间` 允许自定义替换文本格式. (PR #4136 by [呼乎户](https://github.com/wisokey))
+- `清爽首页` 排行榜支持切换为列表模式, 能够查看 10 项左右的排行. (#3611, #3175)
+- 新增功能 `动态看图自动回顶`. (#4029)
+> 在动态里查看图片详情时 (非全屏), 切换图片自动回到图片顶部; 退出查看图片模式时, 自动将动态移入视图内.
+
+- 重构了 `直播信息扩充` 面板, 改为完全自主实现, 支持显示超过 10 条的直播间, 并可以进行搜索和刷新操作. (#3774, #4035, #4034)
+
+<img src="https://user-images.githubusercontent.com/26504152/234049176-7ae3e3cf-6956-4efe-aec1-66218d940c93.png" width="300">
+
+- 新增功能 `反转滚轮调音量`. (#4053)
+> 反转在网页全屏 / 全屏模式下使用滚轮调节音量的方向, 使其更符合使用触控板时的操作方向. 请注意不能和 `禁止滚轮调音量` 一同使用.
+> - 手指向上推时, 增加音量
+> - 手指向下推时, 减少音量
+> - 可以自定义 `灵敏度`, 同样的滚动幅度下, 灵敏度越高变化的音量越多
+
+- 新增功能 `自动点赞`. (#2354)
+> 进入视频 / 查看动态时, 自动点赞.
+
+- 新增功能 `隐藏用户信息卡片`. (PR #4093 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> 隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片.
+
+- 新增功能 `播放器置顶（新）`. (#3030, #PR #4152 by [RieN 7z](https://github.com/rien7))
+> 原来的播放器置顶组件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.
+
+- 新增插件 `搜索栏 - UID 跳转`, `搜索栏 - 数字联想`. (#677)
+> 在输入 UID (用户 ID) 时, 提供对应的跳转选项. / 在输入纯数字时, 提供以下选项:
+> - 跳转至相应的视频 (视为 av 号)
+> - 跳转至相应的专栏 (视为 cv 号)
+
+
+## v2.7.1
+`2023-04-25`
+
+✨新增
+- `与 "解除 B 站区域限制" 互斥` 现在只在番剧页面生效.
+- 更新 `夜间模式` 对新版直播间, 番剧, 稍后再看等页面的适配. (#3963, #4007, #4128, PR #4137 by [Pencil](https://github.com/pencilqaq))
+- 新版番剧页面功能适配: `下载视频` (#4044), `自定义顶栏` (#4007)
+- 新版稍后再看页面功能适配: `外置稍后再看`, `启用快速收藏`, `播放器控制栏背景`, `展开视频简介`. (#3916)
+- `简化直播间 - 付费礼物` 现在对底栏只留一个包裹按钮, 因为其他元素也都算付费礼物了.
+
+🐛修复
+- 修复 `自定义顶栏` 动态的详情链接. (PR #4119 by [星海](https://github.com/lovelyCARDINAL))
+- 修复在部分分辨率下 `外置稍后再看` 和 `启用快速收藏` 的响应式宽度. (#4083)
+- 修复 `直播全屏包裹` 和 `简化直播间 - 付费礼物` 在新版直播间下的适配问题. (#4105, #4108, PR #4122 by [Pencil](https://github.com/pencilqaq), PR #4123 by [Pencil](https://github.com/pencilqaq))
+- 修复 `自定义顶栏` 未完全隐藏个人空间原版顶栏. (#4079)
+- 修复 `直播信息扩充` 在新版动态无法打开 “正在直播” 十个以后的链接. (#4034, #3917, PR #4145 by [hhp1614](https://github.com/hhp1614))
+
+☕开发者相关
+- pnpm 升级至 8.1.0, 之前本地装过依赖的开发者需要重新 `pnpm install` 一下.
+- 废弃 Ajax Hook API. (#4117)
+- 新增 API `addVideoActionButton`, 可向视频操作按钮区的 "收藏" 右侧添加元素.
+
+## v2.7.0-preview
+`2023-03-26`
+
+包含 v2.7.0 的所有更新内容.
+
+- 新增功能 `组件二等分`, 在出现问题时可帮助定位是哪个组件导致的问题. (#3829, PR #3965 by [JLoeve](https://github.com/LonelySteve))
+- 优化了 `loadFeatureCode` 的代码. (PR #4013 by [timongh](https://github.com/timongh))
+- 搜索栏在搜索 ID 时的优化, 新增功能可以通过安装对应的插件来使用: (#677)
+  - 搜索 av / BV 号时, 支持显示视频标题
+  - 支持搜索专栏 cv 号 / 文集 rl 号
+  - 支持搜索音频 au 号 / 播放列表 am 号
+  - 支持搜索番剧 ss / ep 号, 或番剧详情 md 号
+- `自定义顶栏` 的收藏和稍后再看支持显示数量. (#4069)
+- 优化了 `网址参数清理` 的逻辑, 通过 Hook History API 来减少出现重复的历史记录. (#4039)
+- 新增功能 `隐藏热搜`. (#3744)
+> 隐藏搜索栏和搜索页面中的 `bilibili 热搜`.
+- 新增功能 `隐藏视频分享`. (#3663)
+> 隐藏视频和番剧播放器下方的分享按钮.
+- `自定义顶栏` 的订阅支持过滤 在看 / 看过 / 想看. (#3217)
+- 新增插件 `快捷键扩展 - 开关灯`. (#3587)
+> 在快捷键的动作列表里添加一个 "开关灯".
+
+## v2.7.0
+`2023-03-26`
+
+增加了 GitHub Projects 看板: https://github.com/users/the1812/projects/1/views/3, 上面会列出当前和未来计划的功能, 可供参考.
+
+✨新增
+- 快捷键扩展的几个插件自带了 YouTube / PotPlayer 等预设的默认按键. (#3971)
+- `简化直播间` 在开启隐藏付费礼物时, 将直接隐藏左下角的打榜入口 (以前是领银瓜子所以没算进付费礼物). (#4067)
+- `专栏文字选择` 更名为 `专栏复制优化`, 现在专栏的文字默认就可以直接选择, 本功能可以用于去除复制后带上的多余文本. (#4065)
+- 删除功能 `直播录像下载`, 现在已经没有直播录像的页面了. (#4061)
+- 在检测到[解除番剧区域限制](https://greasyfork.org/zh-CN/scripts/25718-%E8%A7%A3%E9%99%A4b%E7%AB%99%E5%8C%BA%E5%9F%9F%E9%99%90%E5%88%B6)的脚本在运行时, 本脚本将停止运行以避免兼容性问题. (#2704)
+- `选集区域优化` 在多个分组时支持仅展开当前分组. (#3899)
+- `播放时自动关灯` 支持星光动画. (PR #4077 by [z503722728](https://github.com/z503722728))
+
+🐛修复
+- 修复 `直播信息扩充` 失效的问题. (#4034, PR #4043 by [deepdarkssj](https://github.com/deepdarkssj))
+- 修复 `简化直播间` 在开启隐藏付费礼物时, 右下布局错乱. (PR #4089 by [Pencil](https://github.com/pencilqaq))
+- 修复动态相关功能对新版专栏卡片不生效. (#3994)
+- 修复搜索界面的广告链接仍然可点击. (#3969)
+- 修复 `图片批量导出` 在动态失效了. (#4038)
+- 修复 `选集区域优化` 仅开启 `展开选集标题` 时视频标题无法显示完全. (#3909)
+- 修复 `查看封面` 在复制链接后没有显示成功图标. (#4002)
+- 修复番剧页面的部分夜间模式. (PR #4077 by [z503722728](https://github.com/z503722728))
+
+☕开发者相关
+- 修复 `IframePopup.vue` 的类型定义. (PR #4014 by [timongh](https://github.com/timongh))
+- 修复 `UserItem.vue` 初始化 Toast 的逻辑问题. (PR #4056 by [timongh](https://github.com/timongh))
+- 优化了 `switch-options.ts` 的注释. (PR #4021 by [timongh](https://github.com/timongh))
+- 清理了项目中 Vue 文件里对未定义字段的引用. (#3992)
+- 导出了 Dialog API (`@/core/dialog`), 允许其他组件使用.
+- 调整了 CONTRIBUTING 中的本地开发流程描述. (PR #4077 by [z503722728](https://github.com/z503722728))
+
+## v2.6.3-preview
+`2023-02-20`
+
+包含 v2.6.3 的所有更新内容.
+
+- 启用新的代码加载方式. (PR #3938 by [timongh](https://github.com/timongh))
+
+## v2.6.3
+`2023-02-20`
+
+- 修复 `隐藏推荐直播` 失效. (#3993)
+- 修复 `夜间模式` 下鼠标移至特定页排行榜时的显示问题. (#1052, PR #4001 by [Tinhone](https://github.com/Tinhone))
+
+## v2.6.2-preview
+`2023-02-09`
+
+包含 v2.6.2 的所有更新内容.
+
+- 修复搜索历史无法删除. (#3893)
+
+## v2.6.2
+`2023-02-09`
+
+- 修复 `播放前显示封面` 未正确清除封面. (#3974, PR #3976 by [imshixin](https://github.com/imshixin))
+- 删除 NavbarWatchlater.vue 中的未定义属性. (#3949)
+
+## v2.6.1-preview
+`2023-02-07`
+
+包含 v2.6.1 的所有更新内容.
+
+- 提高了 `自定义顶栏` 搜索栏中搜索 av 号 / BV 号结果的优先级, 输入编号后直接回车就可以前往视频.
+- 添加跨域存储功能 (`crossOriginLocalStorage`), 支持搜索历史跨域同步. (#3893)
+- 新增功能 `弹幕转义`. (#3470)
+> 将弹幕中的 `\n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.
+
+## v2.6.1
+`2023-02-07`
+
+✨新增
+- 优化 `简化评论区` 的时间样式. (#3541, PR #3791 by [Tinhone](https://github.com/Tinhone))
+- `下载视频`:
+  - 支持选择备用下载地址. (PR #3798 by [Seaward233](https://github.com/Seaward233))
+  - 新增 `StreamSaver` 输出方式.
+  - 新增 `Motrix` 输出方式. (PR #3908 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- `删除广告` 支持屏蔽动态的商品推荐. (#3778)
+- 优化 `自定义顶栏` 的弹窗逻辑, *有任意元素聚焦时* -> *仅在输入框聚焦时*显示弹窗. (#3756)
+- `展开弹幕列表` 新增 `有选集时不自动展开` 选项. (#1734)
+- 新增功能 `禁止滚轮调音量`. (#3489)
+> 在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.
+
+- 新增功能 `批量导入合集`. (PR #3884 by [swhoro](https://github.com/swhoro))
+> 在合集页面制作一个批量导入按钮，可以新增所有合集内视频至同名收藏夹
+
+- `扩展倍速` 添加 `隐藏移除图标` 和 `隐藏新增图标` 选项. (PR #3864 by [Tinhone](https://github.com/Tinhone))
+- 新增插件 `快捷键扩展 - 开关 CC 字幕`, 默认为 <kbd>Shift</kbd> + <kbd>C</kbd>. (#3407)
+- 新增插件 `快捷键扩展 - 开关弹幕列表`, 默认为 <kbd>Shift</kbd> + <kbd>D</kbd>. (#3613)
+- `新版本提示` 支持在安装前查看更新说明.
+- 功能面板为空时增加引导提示. (#3932, PR #3936 by [Ethkuil](https://github.com/Ethkuil))
+- `下载字幕` 支持在番剧页面使用.
+- 新增功能 `禁用评论区搜索词`. (#3648)
+> 禁用评论区的搜索词链接.
+
+🐛修复
+- `下载视频` 的 `flv` 格式恢复 1080P 支持. (一共就 360P / 1080P, 其他清晰度还是没有, 需要的话请使用 dash 格式)
+- 修复评论区功能在新版播放页上的支持, 包括 `复制评论链接` / `简化评论区` 等. (#3807)
+- 修复 `清爽首页` 的排行榜第三项数据不正确. (#3911, PR #3912 by [Colerar](https://github.com/Colerar))
+- 修复 `简化直播间` 对左下角红包的简化样式. (#3243)
+- MDI 图标库内联至本体中, 避免阻塞页面加载. (#3964, #3888)
+- 修复 `侧栏垂直偏移` 在部分直播间失效的问题. (#3934)
+- 修复 `自定义顶栏` 的收藏夹在加载完毕后仍显示加载中. (#3940)
+- 修复 `展开弹幕列表` 检测到的弹幕量不正确. (获取页面的已装载弹幕量太坑了, 改为调 API 获取总弹幕量来判断了) (#3958)
+- 修复 `启用弹幕空降` 失效. (#3187)
+- 修复 `高分辨率图片` 在个人空间投稿页失效. (#3894)
+- 修复 `复制评论链接` 在个人空间复制出的链接不正确. (#3821)
+- 修复 ASS 弹幕中的颜色标记不正确. (#3960)
+
+☕开发者相关
+- 完成 define API + SwitchOptions API 的改造 (受影响组件为 `简化首页` 和 `简化直播间`), 感谢 [timongh](https://github.com/timongh) 的长期贡献.
+- 重新拆分了一下 PlayerAgent 的文件.
+- 修复 CI 构建脚本未提交新增文件. (#3903)
+- 新增 Dialog API, 可用简单封装以弹窗形式展示的内容.
+- 开源许可有所变更, 对再分发有一些限制, 详见 [LICENSE](./LICENCE.md).
+- 删除了 `<template>` 元素多余的 class. (#3951)
+- 修复 VSCode Task 中的 ESLint 命令和 package.json 中不一致. (#3950)
+- TypeScript 升级至 4.9 版本.
+
+
+## v2.6.0-preview
+`2023-01-01`
+
+包含 v2.6.0 的所有更新内容.
+
+✨新增
+- 新增功能 `批量导入合集`. (PR #3884 by [swhoro](https://github.com/swhoro))
+> 在合集页面制作一个批量导入按钮，可以新增所有合集内视频至同名收藏夹
+
+- `扩展倍速` 添加 `隐藏移除图标` 和 `隐藏新增图标` 选项. (PR #3864 by [Tinhone](https://github.com/Tinhone))
+- 新增插件 `快捷键扩展 - 开关 CC 字幕`, 默认为 <kbd>Shift</kbd> + <kbd>C</kbd>. (#3407)
+
+🐛修复
+- 修复新版播放页下 `简化评论区` 的样式. (#3872)
+- `StreamSaver` 下载补充三方 cookie 说明. (#3824)
+
+☕开发者相关
+- 完成 define API + SwitchOptions API 的改造 (受影响组件为 `简化首页` 和 `简化直播间`), 感谢 [timongh](https://github.com/timongh) 的长期贡献.
+- 重新拆分了一下 PlayerAgent 的文件.
+
+## v2.6.0
+`2023-01-01`
+
+✨新增
+- `快速收起评论区` 添加了平滑滚动效果. (PR #3857 by [Mike Lei](https://github.com/mikelei8291))
+- `删除广告` 新增对搜索页广告的的屏蔽. (#3863)
+- `显示视频投稿时间` 适配新版播放页. (#3860, PR #3880 by [wisokey](https://github.com/wisokey))
+- `网址参数清理` 新增 `buvid`, `mid`, `up_id` 的清理. (#3896)
+- `选集区域优化` 支持折叠合集下的分组. (#3764)
+
+🐛修复
+- 重新调整了 `自定义顶栏` 的历史弹窗过滤器, 改为只能选择 `全部` 或者单一类型 (#2729), 解决专栏加载不出来的问题 (#3676).
+- 修复 `下载字幕` 在 3.x 播放器检测不到语言选项的问题. (#3873)
+- 修复旧版播放页中高能进度条未跟随主题颜色. (#3830)
+- 修复 `选集区域优化` 临时收起时, 多行标题出现布局问题. (#3841)
+- 修复 `禁用特殊弹幕样式` 失效. (#3886)
+- 修复 `删除视频弹窗` 失效. (#3853)
+- 修复 `自定义顶栏` 开启后原版顶栏高度异常. (#3833) (应该还需要再优化下, 现在还会有点小空隙, 不过没之前那么离谱了)
+- `隐藏视频标题层` 补充 `视频` 标签. (#3839)
+
+## v2.5.2-preview
+`2022-11-19`
+
+包含 v2.5.2 的所有更新内容.
+
+- 优化 `简化评论区` 的时间样式. (#3541, PR #3791 by [Tinhone](https://github.com/Tinhone))
+- `下载视频` 支持选择备用下载地址. (PR #3798 by [Seaward233](https://github.com/Seaward233))
+- 优化 `自定义顶栏` 的弹窗逻辑, *有任意元素聚焦时* -> *仅在输入框聚焦时*显示弹窗. (#3756)
+- `删除广告` 支持屏蔽动态的商品推荐. (#3778)
+- 新增插件 `快捷键扩展 - 开关弹幕列表`, 默认为 <kbd>Shift</kbd> + <kbd>D</kbd>. (#3613)
+- `展开弹幕列表` 新增 `有选集时不自动展开` 选项. (#1734)
+- 新增功能 `禁止滚轮调音量`. (#3489)
+> 在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.
+
+- `下载视频` 新增 `StreamSaver` 输出方式.
+- `下载视频` 的 `flv` 格式恢复 1080P 支持. (一共就 360P / 1080P, 其他清晰度还是没有, 需要的话请使用 dash 格式)
+- Comment API 支持新版播放页的评论区, `复制评论链接` / `简化评论区` 等相关功能应该可以使用了. (#3807)
+
+## v2.5.2
+`2022-11-19`
+
+**⚠警告: 运行脚本的浏览器版本要求提高至:**
+- Chrome / Edge: > 100
+- FireFox: > 103
+- Safari: > 15
+
+✨新增
+- 优化 `控制栏触摸优化` 在多 P 视频下的样式.
+- 优化夜间模式在新版播放页 / 搜索页 / 直播间下的样式.
+- 在线仓库支持筛选 `全部` / `已安装` / `未安装`.
+
+🐛修复
+- 修复 `自定义顶栏 - 频道` 失效的问题. (#3752)
+- 修复 `扩展倍速` 的选项在 3.x 播放器中无法点击的问题. (#3539, PR #3805 by [JLoeve](https://github.com/LonelySteve))
+- 修复 `BV 号转换` 的复制 av 号功能失效. (#3794, PR #3797 by [Hobart Zhi-xin Lin](https://github.com/Ethkuil))
+- 修复 `自定义顶栏` 的搜索项布局错乱, 以及对原版顶栏隐藏不完全.
+- 修复功能文档中的链接错误.
+- 修复 `外置稍后再看` 和 `启用快速收藏` 的图标在宽屏下尺寸不对.
+- 修复在线仓库中的描述提示层级问题. (#3759)
+- 修复 `极简首页` 的默认标签页设置不生效. (#3817)
+
+
+## v2.5.1
+`2022-10-22`
+- 修复 `展开选集列表` 和 `展开选集标题` 冲突的问题, 这两个组件将合并在一起, 并提供单独的选项控制列表和标题. (#3752, #692)
+> 如果在 v2.5.0 中尝试安装过 `展开选集列表`, 记得先卸载掉.
+
+- 修复 jsDelivr 源中 MDI 图标库加载失败. (#3752, #3761)
+- 修复 `简化首页` 在带 query 参数的首页不显示分区选项. (#3730)
+
+## v2.5.0
+`2022-10-20`
+
+✨新增
+- 新增功能 `隐藏动态评论预览`. (#3322)
+> 隐藏动态评论按钮上方的精选评论预览.
+
+- 新增功能 `显示视频投稿时间`. (PR #3727 by [wisokey](https://github.com/wisokey))
+> 为视频播放页面的推荐列表中的视频添加显示视频投稿时间.
+
+- 新增功能 `展开选集列表`. (#3380)
+> 总是完全展开视频选集列表, 注意对番剧无效.
+
+🐛修复
+- 由于 Chrome / Firefox / Safari 均已支持自适应滚动条, `夜间模式` 不再覆盖默认滚动条样式, 设置的组件详情不再隐藏滚动条. (#3370)
+- 修复 `下载字幕` 得到的 ASS 文件格式不正确. (#3688)
+- 修复 `播放前显示封面` 在视频暂停时仍然显示封面. (#3698)
+- `自定义顶栏` 的弹窗改为有焦点时不自动收起, 以防止在其中打字时意外收起. (#3703)
+- 修复 `动态过滤器` 的关键词过滤在首页和顶栏中有时无法生效的问题, 以及对转发动态无效的问题.
+- 修复 b 站消息会被 `自定义顶栏` 遮挡的问题. (#3702)
+- 修复 `动态反折叠` 有时失效的问题.
+- 修复 `极简首页` 中合作投稿样式的问题.
+- 尝试修复 `document.body is null` 报错导致脚本无法加载的问题. (#3728)
+- 修复 `下载弹幕` 无法读取 3.x 播放器的弹幕设置, 以及文件中的弹幕乱序的问题. (#3739)
+- 修复 `自定义顶栏` 在搜索页没有正确隐藏原版顶栏. (#3731)
+
+☕开发者相关
+- 包管理器更换为 pnpm, **请删除 node_modules 并重新安装依赖 (`pnpm install`)**.
+- ESLint 加入了 Prettier 规则. (#3729)
+- 更多的组件更换为 define API 声明. (PR #3682, PR #3697 by [timongh](https://github.com/timongh))
+- 改善了动态的 `addMenuItem` API 稳定性.
+- 添加了 `createPostHook` API, 可以让原函数先执行再让钩子函数执行.
+
+## v2.4.1-preview
+`2022-09-18`
+
+包含 v2.4.1 的所有更新内容.
+
+- 更多的组件更换为 define API 声明. (PR #3682 by [timongh](https://github.com/timongh))
+- 新增功能 `隐藏动态评论预览`. (#3322)
+- 由于 Chrome / Firefox / Safari 均已支持自适应滚动条, `夜间模式` 不再覆盖默认滚动条样式, 设置的组件详情不再隐藏滚动条. (#3370)
+
+## v2.4.1
+`2022-09-18`
+
+✨新增
+- `删除视频弹窗` 支持删除预约弹窗. (#3670)
+- 默认 CDN 切换至 AltCdn (指代非 GitHub 的 CDN, 目前指向 fastly.jsdelivr.net) (#3657)
+
+> 如果目前使用的是 GitHub 源的脚本, 且希望更换至 AltCdn, 需要重新选择 AltCdn 源的脚本进行安装.
+
+🐛修复
+- 修复 `自定义顶栏` 头像加载不出来. (#3679)
+- `夜间模式` 修复对新版视频页和首页的适配. (#3671, #3661)
+- `删除广告` 适配新版首页. (#3585)
+
 ## v2.4.0
+`2022-09-03`
 
 ✨新增
 <details>
@@ -51,6 +1363,7 @@
 - 适配了 VSCode File Nesting 功能.
 
 ## v2.3.3-preview
+`2022-08-25`
 
 包含 v2.2.4 的所有更新内容.
 
@@ -58,6 +1371,7 @@
 - 修复 `UP 主黑名单` 无法添加 UP 主. (#3597, PR #3598 by [snowraincloud](https://github.com/snowraincloud))
 
 ## v2.2.4
+`2022-08-25`
 
 ✨新增
 - `自定义顶栏` 适配新版首页的分区栏. (#3585)
@@ -75,6 +1389,7 @@
 - 修复设置中组件空菜单的显示异常. (#3610)
 
 ## v2.3.2-preview
+`2022-08-14`
 
 包含 v2.2.3 的所有更新内容.
 

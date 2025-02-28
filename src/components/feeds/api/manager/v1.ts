@@ -1,6 +1,7 @@
 import { childList } from '@/core/observer'
+import { getVue2Data } from '@/core/utils'
 import { sq } from '@/core/spin-query'
-import { FeedsCardsManager, FeedsCardsManagerEventType, getVueData } from './base'
+import { FeedsCardsManager, FeedsCardsManagerEventType } from './base'
 import { feedsCardTypes, isRepostType, FeedsCard, FeedsCardType } from '../types'
 
 const getFeedsCardType = (element: HTMLElement) => {
@@ -40,11 +41,11 @@ const getFeedsCardType = (element: HTMLElement) => {
  */
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   const getSimpleText = async (selector: string) => {
-    const subElement = await sq(
+    const subElement = (await sq(
       () => element.querySelector(selector),
       it => it !== null || element.parentNode === null,
       { queryInterval: 100 },
-    ) as HTMLElement
+    )) as HTMLElement
     if (element.parentNode === null) {
       // console.log('skip detached node:', element)
       return ''
@@ -67,7 +68,11 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     }
     const originalCard = JSON.parse(vueData.card.origin)
     const originalText: string = vueData.originCardData.pureText
-    const originalDescription: string = lodash.get(originalCard, 'item.description', lodash.get(originalCard, 'desc', ''))
+    const originalDescription: string = lodash.get(
+      originalCard,
+      'item.description',
+      lodash.get(originalCard, 'desc', ''),
+    )
     const originalTitle: string = originalCard.title
     return {
       originalText,
@@ -81,7 +86,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     }
     const el = await sq(
       () => element,
-      (it: any) => Boolean(getVueData(it) || !element.parentNode),
+      (it: any) => Boolean(getVue2Data(it) || !element.parentNode),
       { queryInterval: 100 },
     )
     if (element.parentNode === null) {
@@ -89,24 +94,20 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
       return ''
     }
     if (el === null) {
-      console.warn(el, element, getVueData(el), element.parentNode)
+      console.warn(el, element, getVue2Data(el), element.parentNode)
       return ''
     }
-    const vueData = getVueData(el)
+    const vueData = getVue2Data(el)
     if (type === feedsCardTypes.repost) {
       const currentText = vueData.card.item.content
       const repostData = getRepostData(vueData)
-      return [
-        currentText,
-        ...Object.values(repostData).filter(it => it !== ''),
-      ].filter(it => Boolean(it)).join('\n')
+      return [currentText, ...Object.values(repostData).filter(it => it !== '')]
+        .filter(it => Boolean(it))
+        .join('\n')
     }
     const currentText = vueData.originCardData.pureText
     const currentTitle = vueData.originCardData.title
-    return [
-      currentText,
-      currentTitle,
-    ].filter(it => Boolean(it)).join('\n')
+    return [currentText, currentTitle].filter(it => Boolean(it)).join('\n')
   }
   const getNumber = async (selector: string) => {
     const result = parseInt(await getSimpleText(selector))
@@ -124,7 +125,9 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     likes: await getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
     element,
     type: getFeedsCardType(element),
-    get presented() { return element.parentNode !== null },
+    get presented() {
+      return element.parentNode !== null
+    },
     async getText() {
       return getComplexText(this.type)
     },
@@ -133,7 +136,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   element.setAttribute('data-type', card.type.id.toString())
   if (isRepostType(card)) {
     const currentUsername = card.username
-    const vueData = getVueData(card.element)
+    const vueData = getVue2Data(card.element)
     const repostUsername = lodash.get(vueData, 'card.origin_user.info.uname', '')
     if (currentUsername === repostUsername) {
       element.setAttribute('data-self-repost', 'true')

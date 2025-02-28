@@ -2,6 +2,7 @@ import { createPopper, Instance as Popper } from '@popperjs/core'
 import { VueModule, Executable } from '@/core/common-types'
 import { getComponentSettings, addComponentListener } from '@/core/settings'
 import type { CustomNavbarOptions } from '.'
+import { getUID } from '@/core/utils'
 
 export const CustomNavbarItems = 'customNavbar.items'
 export const CustomNavbarRenderedItems = 'customNavbar.renderedItems'
@@ -83,10 +84,15 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
       throw new Error('Missing CustomNavbarItem content')
     }
 
-    addComponentListener('customNavbar.touch', (value: boolean) => {
-      this.touch = value ? init.touch : false
-    }, true)
-    this.hidden = CustomNavbarItem.navbarOptions.hidden.includes(this.name)
+    addComponentListener(
+      'customNavbar.touch',
+      (value: boolean) => {
+        this.touch = value ? init.touch : false
+      },
+      true,
+    )
+    this.hidden =
+      CustomNavbarItem.navbarOptions.hidden.includes(this.name) || (!getUID() && init.loginRequired)
     const orderMap = CustomNavbarItem.navbarOptions.order
     this.order = orderMap[this.name] || 0
     this.requestedPopup = !this.lazy

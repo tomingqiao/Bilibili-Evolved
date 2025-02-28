@@ -5,17 +5,17 @@ import { ListAdaptorKey, FeedsCardsListAdaptor } from './adaptor'
 
 export const feedsCardCallbacks: Required<FeedsCardCallback>[] = []
 
-export const getVueData = (el: any) => (
-  // eslint-disable-next-line no-underscore-dangle
-  el.__vue__ ?? el.parentElement.__vue__ ?? el.children[0].__vue__
-)
+// TODO: 仅做兼容性导出, v2.8.11 之后可移除
+export { getVue2Data as getVueData } from '@/core/utils'
 
-export const createNodeValidator = (className: string) => (node: Node): node is HTMLElement => {
-  const notNull = Boolean(node)
-  const notDetached = node && node.parentNode
-  const matchClassName = (node instanceof HTMLElement) && node.matches(className)
-  return notNull && notDetached && matchClassName
-}
+export const createNodeValidator =
+  (className: string) =>
+  (node: Node): node is HTMLElement => {
+    const notNull = Boolean(node)
+    const notDetached = node && node.parentNode
+    const matchClassName = node instanceof HTMLElement && node.matches(className)
+    return notNull && notDetached && matchClassName
+  }
 
 /** 动态卡片管理器支持的自定义事件 */
 export enum FeedsCardsManagerEventType {
@@ -51,7 +51,9 @@ export abstract class FeedsCardsManager extends EventTarget {
   dispatchCardEvent(type: FeedsCardsManagerEventType, card: FeedsCard) {
     const event = new CustomEvent(type, { detail: card })
     this.dispatchEvent(event)
-    feedsCardCallbacks.forEach(c => c[type === FeedsCardsManagerEventType.AddCard ? 'added' : 'removed'](card))
+    feedsCardCallbacks.forEach(c =>
+      c[type === FeedsCardsManagerEventType.AddCard ? 'added' : 'removed'](card),
+    )
   }
   /** 对当前页面开始监测 */
   async startWatching() {

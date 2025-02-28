@@ -1,9 +1,11 @@
 import { allMutations } from '@/core/observer'
 import { select } from '@/core/spin-query'
+import { matchUrlPattern } from '@/core/utils'
+import { bangumiUrls } from '@/core/utils/urls'
 
 const idPolyfill = async () => {
   const player = await select(() => unsafeWindow.player)
-  if (!(player?.getVideoMessage)) {
+  if (!player?.getVideoMessage) {
     return
   }
   const { useScopedConsole } = await import('@/core/utils/log')
@@ -27,7 +29,7 @@ const idPolyfill = async () => {
 }
 
 export const v2PlayerPolyfill = lodash.once(() => {
-  if (document.URL.startsWith('https://www.bilibili.com/bangumi/play/')) {
+  if (bangumiUrls.some(url => matchUrlPattern(url))) {
     return
   }
   if (unsafeWindow.aid || unsafeWindow.cid) {
